@@ -36,6 +36,9 @@ const Image = styled.img`
 
 const TitleContainer = styled.div `
     margin: 0 20px;
+    @media screen and (max-width: 980px) {
+        display: block;
+    }
 `
 const StyledLink = styled(Link)`
     text-decoration: none;

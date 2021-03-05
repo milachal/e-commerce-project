@@ -1,21 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import ProductAdminInfo from '../admin/ProductAdminInfo'
 
 
-const ProductCard = (props) => {
+const ProductCard = ({ id, src, title, price}) => {
+
+    const location = useLocation()
+    const path = location.pathname
+   
+    const re = /\/admin\/|\/admin/g
+
     return (
-        <StyledLink to={`/product/${props.id}`}>
-            <Container>
+        <Container>
+            {re.test(path) ? <ProductAdminInfo productId={id} image={src} /> : null}
+            <StyledLink to={`/product/${id}`}>
                 <ImgContainer>
-                    <Img alt="product" src={props.src} />
+                    <Img alt="product" src={src} />
                 </ImgContainer>
                 <div>
-                    <h3>{props.title}</h3>
-                    <Price>{props.price}</Price>
+                    <h3>{title}</h3>
+                    <Price>{price}</Price>
                 </div>
-            </Container>
-        </StyledLink>
+            </StyledLink>
+        </Container>
     )
 }
 
@@ -41,6 +49,7 @@ const ImgContainer = styled.div`
 const Container = styled.div`
     margin: 1rem;
     text-align: center;
+    position: relative;
 
 `
 const Price = styled.h3`

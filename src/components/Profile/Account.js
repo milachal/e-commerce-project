@@ -3,11 +3,11 @@ import Login from './Login'
 
 const Account = () => {
 
-    const [login, setLogin] = useState(true)
+    const [login, setLogin] = useState(false)
 
     return(
         <div>
-            {login ? <Login/> : <h1>Account page</h1>}
+            {!login ? <Login /> : <h1>Account page</h1>}
         </div>
     )
 }

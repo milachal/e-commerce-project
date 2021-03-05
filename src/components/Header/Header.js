@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import User from '../../images/user.svg'
-import Cart from '../../images/shopping-cart.svg'
+import User from '../../images/icons/user.svg'
+import Cart from '../../images/icons/shopping-cart.svg'
 import SearchBar from './SearchBar'
 
 const Header = () => {
@@ -16,7 +16,9 @@ const Header = () => {
                 </Link> 
             </span> 
             <span>
-                <Icon src={Cart} alt="cart-icon" />
+                <Link to="/cart">
+                    <Icon src={Cart} alt="cart-icon" />
+                </Link>
             </span>
         </StyledHeader>
     )

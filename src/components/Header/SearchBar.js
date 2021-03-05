@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import search from '../../images/magnifying-glass.svg'
+import search from '../../images/icons/magnifying-glass.svg'
 import SearchSuggestion from '../Products/SearchSuggestion'
 
 const SearchBar = () => {
@@ -13,16 +13,14 @@ const SearchBar = () => {
     const getSearchKeyword = async (e) => {
         const newKeyword = e.target.value
         setKeyword(newKeyword)
-        const { data } = await axios.get('https://fakestoreapi.com/products/')
+        const { data } = await axios.get('http://localhost:3001/products/')
         if (newKeyword) {
-            console.log(newKeyword, 'keyword')
             setSuggestions(data.filter((product) => {
                 return product.title.toLowerCase().includes(newKeyword)
             }))
         }    
     }
     
-    console.log(suggestions)
     return (
         <Container>
             <Search 

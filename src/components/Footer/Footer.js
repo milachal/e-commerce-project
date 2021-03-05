@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import facebook from '../../images/facebook.svg'
-import instagram from '../../images/instagram.svg'
-import twitter from '../../images/twitter.svg'
+import facebook from '../../images/icons/facebook.svg'
+import instagram from '../../images/icons/instagram.svg'
+import twitter from '../../images/icons/twitter.svg'
 
 const Footer = () => {
     return (

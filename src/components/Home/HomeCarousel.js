@@ -11,10 +11,13 @@ const HomeCarousel = () => {
     let settings = {
         dots: true,
         infinite: true,
-        speed: 500,
+        speed: 2000,
+        pauseOnHover: true,
         slidesToShow: 1,
         slidesToScroll: 1,
-        swipeToSlide: true
+        autoplay: true,
+        autoplaySpeed: 8000,
+        cssEase: "linear"
     }
 
     return (

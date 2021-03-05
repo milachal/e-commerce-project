@@ -1,23 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 import styled from 'styled-components'
-import Navigation from '../Navigation/Navigation'
-import Header from '../Header/Header'
 import ProductCard from './ProductCard'
-import Footer from '../Footer/Footer'
 
 
-const Products = (props) => {
+const Products = () => {
 
     const [products, setProducts] = useState([])
-
-    const searchKeyword = props.location.search
+    const location = useLocation()
+    const searchKeyword = location.search 
+    const keyword = new URLSearchParams(searchKeyword.toLowerCase()).get('search')
     
-    const keyword = new URLSearchParams(searchKeyword.toLowerCase()).get('search');
-
     useEffect(() => {
         const fetchProducts = async () => {
-           const { data } = await axios.get('https://fakestoreapi.com/products/')
+           const { data } = await axios.get('http://localhost:3001/products')
 
            if (keyword) {
                setProducts(data.filter((product) => {
@@ -30,28 +27,22 @@ const Products = (props) => {
         fetchProducts()
     }, [keyword])
 
-    console.log(products)
-
-
     return (
-        <div>
-            <Navigation />
-            <Header />
+        <div> 
             <Container>
                 {products.map((product) => {
                     return (
-                        <ProductContainer key={product.id}>
+                        <ProductContainer key={product._id}>
                             <ProductCard 
                                 src={product.image}
                                 title={product.title}
                                 price={`${product.price} lv`}
-                                id={product.id}
+                                id={product._id}
                             />
                         </ProductContainer>
                     )
                 })}
             </Container>
-            <Footer />
         </div>
     )
 }

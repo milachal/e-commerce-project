@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
+import Button from '../ui/Button'
 
 const Login = () => {
     return(
@@ -22,7 +23,7 @@ const Login = () => {
                 <Header>Don't have an account?</Header>
                 <Text>If you don't have an account, Textlease proceed by clicking the following button to continue first-time registration.</Text>
                 <br/>
-                <Button type="submit">Create an account</Button>
+                <Button type="submit"><Link href="/account/signup">Create an account</Link></Button>
             </SignupContainer>
         </div>
     )
@@ -61,23 +62,6 @@ const Input = styled.input`
 styled.input[type="placeholder"]
     color: #575555 */
 
-
-const Button = styled.button`
-    color: #ffffff;
-    background-color: #242424;
-    border-color: #242424;
-    font-size: 13px;
-    text-transform: uppercase;
-    padding: 12px 20px;
-    width: 80%;
-    max-width: 300px;
-    margin-left: 3rem;  
-    border-radius: 5px;
-    cursor: pointer;    
-    &:hover{
-        opacity: 0.8;
-    }
-`
 const ForgotPass = styled.h6`
     display: inline-block;
     font-size: 80%;
@@ -101,4 +85,12 @@ const Text = styled.p`
     margin-left: 3rem;
     width: 80%;
     max-width: 300px;   
+`
+
+const Link = styled.a`
+    text-decoration: none;
+    color: white;
+    &:active{
+        color: white;
+    }
 `

@@ -10,11 +10,18 @@ const ProductPage = () => {
 
     const [product, setProduct] = useState({})
     const { id } = useParams() 
+    const params = useParams()
+    console.log('params', params)
 
     useEffect(() => {
         (async () => {
-            const { data } = await axios.get(`https://fakestoreapi.com/products/${id}`)
-            setProduct(data)
+            try {
+                const { data } = await axios.get(`http://localhost:3001/products/${id}`)
+                console.log(data)
+                setProduct(data)
+            } catch (e) {
+                console.log(e)
+            }
         })()
     }, [id])
 
@@ -23,11 +30,11 @@ const ProductPage = () => {
             <Navigation />
             <Header />
             <ImgContainer>
-                <Img src={product.image} alt={product.id} />
+                <Img src={product.image} alt={product._id} />
             </ImgContainer>
             <InfoContainer>
                 <h2>{product.title}</h2>
-                <h4>{product.price}</h4>
+                <h4>{`${product.price} lv`}</h4>
                 <p>{product.description}</p>
             </InfoContainer>
                 
