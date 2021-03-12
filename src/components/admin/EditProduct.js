@@ -20,7 +20,7 @@ const EditProduct = () => {
 
     useEffect(() => {
         const getProductById = async () => {
-           const { data } = await axios.get(`http://localhost:3001/products/${id}`)
+           const { data } = await axios.get(`http://localhost:3001/api/products/${id}`)
            setTitle(data.title)
            setPrice(data.price)
            setSex(data.sex)
@@ -50,7 +50,7 @@ const EditProduct = () => {
 
         const updateProduct = async () => {
             try {
-                await axios.patch(`http://localhost:3001/products/${id}`, { title, price, sex, category, description, image })
+                await axios.patch(`http://localhost:3001/api/products/${id}`, { title, price, sex, category, description, image })
                 history.push('/admin')
             } catch (e) {
                 alert('Unable to update product')

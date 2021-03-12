@@ -8,9 +8,7 @@ const App = () => {
     return (
         <div>
             <GlobalStyle />
-            <Router>
-                <Home />
-            </Router>
+            <Router />
         </div>
     )
 }

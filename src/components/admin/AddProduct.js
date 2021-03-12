@@ -33,7 +33,7 @@ const AddProduct = () => {
         } 
         const postProduct = async () => {
             try {
-                await axios.post('http://localhost:3001/add-new-product', { title, price, sex, category, description, image })
+                await axios.post('http://localhost:3001/api/add-new-product', { title, price, sex, category, description, image })
                 history.push('/admin')
             } catch (e) {
                 console.log('Unable to create product')

@@ -14,7 +14,7 @@ const Products = () => {
     
     useEffect(() => {
         const fetchProducts = async () => {
-           const { data } = await axios.get('http://localhost:3001/products')
+           const { data } = await axios.get('http://localhost:3001/api/products')
 
            if (keyword) {
                setProducts(data.filter((product) => {

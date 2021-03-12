@@ -1,21 +1,60 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
+
 import Navigation from '../Navigation/Navigation'
 import Button from '../ui/Button'
 
 const Login = () => {
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
+
+    const loginHandler = async () => {
+        try {
+            const { data } = await axios.post('http://localhost:3001/api/login', { email, password })
+            console.log(data)
+        } catch ({ response }) {
+            if (response.status === 401) {
+                return setError('Wrong credentials.')
+            }
+        }
+    }
+    
+    console.log('email', email)
+    console.log('pass', password)
+
     return(
         <div>
             <Navigation />
             <Container>
                 <Header>Log in</Header>
+                {error ? <Error>{error}</Error> : null}
                 <InputContainer>
-                    <Input type="email" name="username" placeholder="email" />
+                    <Input 
+                        type="email" 
+                        name="username" 
+                        placeholder="email" 
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}    
+                    />
                 </InputContainer>
                 <InputContainer>    
-                    <Input type="password" name="password" placeholder="password" />
+                    <Input 
+                        type="password" 
+                        name="password" 
+                        placeholder="password" 
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}    
+                    />
                 </InputContainer>
-                <Button type="submit">Log in</Button>
+                <Button 
+                    type="submit"
+                    onClick={loginHandler}
+                >
+                    Log in
+                </Button>
                 <br/>
                 <ForgotPass>Forgot your password?</ForgotPass>
             </Container>
@@ -38,6 +77,11 @@ const Container = styled.div`
         display: block;
         width: 100%;
     }
+`
+
+const Error = styled.span`
+    color: #ff0000;
+    margin: 3rem;
 `
 
 const InputContainer = styled.div`

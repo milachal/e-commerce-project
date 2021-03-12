@@ -13,7 +13,7 @@ const SearchBar = () => {
     const getSearchKeyword = async (e) => {
         const newKeyword = e.target.value
         setKeyword(newKeyword)
-        const { data } = await axios.get('http://localhost:3001/products/')
+        const { data } = await axios.get('http://localhost:3001/api/products/')
         if (newKeyword) {
             setSuggestions(data.filter((product) => {
                 return product.title.toLowerCase().includes(newKeyword)

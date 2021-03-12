@@ -11,7 +11,7 @@ const DeleteProductPopUp = ({ productId, closePopUp, image }) => {
 
     const deleteProduct = async (e) => {
         e.preventDefault()
-        await axios.delete(`http://localhost:3001/products/${productId}`)
+        await axios.delete(`http://localhost:3001/api/products/${productId}`)
         history.push('/admin')
     }
     

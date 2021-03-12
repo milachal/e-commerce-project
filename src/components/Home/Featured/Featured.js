@@ -49,7 +49,7 @@ const Featured = () => {
 
   useEffect(() => {
       const getFeaturedProducts = async () => {
-        const { data } = await axios.get('http://localhost:3001/products')
+        const { data } = await axios.get('http://localhost:3001/api/products')
         setProducts(data.slice(0, 5))
       }
       getFeaturedProducts()
