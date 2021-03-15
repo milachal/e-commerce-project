@@ -1,5 +1,4 @@
 import React from 'react'
-import Home from './components/Home/Home'
 import Router from './Router'
 import GlobalStyle from './globalStyles';
 

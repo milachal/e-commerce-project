@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import Login from './Login'
+import AccountPage from './AccountPage'
 
 const Account = () => {
 
-    const [login, setLogin] = useState(false)
+    const [login, setLogin] = useState(true)
 
     return(
         <div>
-            {!login ? <Login /> : <h1>Account page</h1>}
+            {!login ? <Login /> : <AccountPage />}
         </div>
     )
 }

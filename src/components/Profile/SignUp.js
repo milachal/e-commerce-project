@@ -22,13 +22,14 @@ const SignUp = () => {
             return setError('Please, agree to our terms and conditions.')
         }
         try {
-            const { data } = await axios.post('http://localhost:3001/api/signup', { email, name, password })
+            const { data } = await axios.post('http://localhost:3001/api/account/signup', { email, name, password }, { withCredentials: true })
             console.log(data)
         } catch (error) {
-            if (error.response.status === 500) {
+            console.log(error)
+            if (error.response && error.response.status === 500) {
                 setError('Something went wrong. Please try again.')
             }
-            if (error.response.status === 400) {
+            if (error.response && error.response.status === 400) {
                 setError('Email exists.')
             }
         }

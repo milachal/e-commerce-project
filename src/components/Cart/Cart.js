@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+// import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'

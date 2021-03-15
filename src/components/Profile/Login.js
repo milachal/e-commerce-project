@@ -13,18 +13,15 @@ const Login = () => {
 
     const loginHandler = async () => {
         try {
-            const { data } = await axios.post('http://localhost:3001/api/login', { email, password })
+            const { data } = await axios.post('http://localhost:3001/api/account/login', { email, password }, { withCredentials: true })
             console.log(data)
         } catch ({ response }) {
-            if (response.status === 401) {
+            if (error.response && response.status === 401) {
                 return setError('Wrong credentials.')
             }
         }
     }
     
-    console.log('email', email)
-    console.log('pass', password)
-
     return(
         <div>
             <Navigation />
@@ -87,6 +84,7 @@ const Error = styled.span`
 const InputContainer = styled.div`
     margin: 1rem; 
 `
+
 const Header = styled.h2`
     font-size: 200%;
     margin-left: 3rem;  
