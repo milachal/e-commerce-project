@@ -1,20 +1,43 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
+import authAPI from '../../api/axios'
+import { Redirect } from 'react-router'
 
 import Navigation from '../Navigation/Navigation'
 import Button from '../ui/Button'
+import Spinner from '../ui/Spinner'
 
 const Login = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
+    const [login, setLogin] = useState(false)
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const loadAccount = async () => {
+            try {
+                const response = await authAPI.get('account/me')
+                if (response.status === 200) {
+                    setLoading(!loading)
+                    return setLogin(true)
+                    
+                }
+            } catch (e) {
+                setLoading(!loading)
+                setLogin(false)
+            }
+        }
+        loadAccount()
+    }, [])
 
     const loginHandler = async () => {
         try {
-            const { data } = await axios.post('http://localhost:3001/api/account/login', { email, password }, { withCredentials: true })
-            console.log(data)
+            const response = await authAPI.post('account/login', { email, password } )
+            if (response.status === 200) {
+                return setLogin(true)
+            }
         } catch ({ response }) {
             if (error.response && response.status === 401) {
                 return setError('Wrong credentials.')
@@ -22,52 +45,58 @@ const Login = () => {
         }
     }
     
-    return(
-        <div>
+    return (
+        <>
+            {login ? <Redirect to="/account/me" /> : null}
             <Navigation />
-            <Container>
-                <Header>Log in</Header>
-                {error ? <Error>{error}</Error> : null}
-                <InputContainer>
-                    <Input 
-                        type="email" 
-                        name="username" 
-                        placeholder="email" 
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}    
-                    />
-                </InputContainer>
-                <InputContainer>    
-                    <Input 
-                        type="password" 
-                        name="password" 
-                        placeholder="password" 
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}    
-                    />
-                </InputContainer>
-                <Button 
-                    type="submit"
-                    onClick={loginHandler}
-                >
-                    Log in
-                </Button>
-                <br/>
-                <ForgotPass>Forgot your password?</ForgotPass>
-            </Container>
-            <SignupContainer>
-                <Header>Don't have an account?</Header>
-                <Text>If you don't have an account, Textlease proceed by clicking the following button to continue first-time registration.</Text>
-                <br/>
-                <Button type="submit"><Link href="/account/signup">Create an account</Link></Button>
-            </SignupContainer>
-        </div>
+            {loading ? <Spinner /> : (
+                <>
+                    <LoginContainer>
+
+                        <Header>Log in</Header>
+                        {error ? <Error>{error}</Error> : null}
+                        <InputContainer>
+                            <Input 
+                                type="email" 
+                                name="username" 
+                                placeholder="email" 
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}    
+                            />
+                        </InputContainer>
+                        <InputContainer>    
+                            <Input 
+                                type="password" 
+                                name="password" 
+                                placeholder="password" 
+                                value={password}
+                                onChange={e => setPassword(e.target.value)}    
+                            />
+                        </InputContainer>
+                        <Button 
+                            type="submit"
+                            onClick={loginHandler}
+                        >
+                            Log in
+                        </Button>
+                        <br/>
+                        <ForgotPass>Forgot your password?</ForgotPass>
+                    </LoginContainer>
+                    <SignupContainer>
+                        <Header>Don't have an account?</Header>
+                        <Text>If you don't have an account, Textlease proceed by clicking the following button to continue first-time registration.</Text>
+                        <br/>
+                        <Button type="submit"><Link href="/account/signup">Create an account</Link></Button>
+                    </SignupContainer>
+                    </>
+            )}
+        </>
     )
 }
 
 export default Login
 
-const Container = styled.div`
+const LoginContainer = styled.div`
     display: inline-block;
     width: 50%;
     @media screen and (max-width: 980px) {

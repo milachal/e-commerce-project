@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import axios from 'axios'
+import authAPI from '../../api/axios'
 import { StyledButton } from '../ui/Button'
 import Navigation from '../Navigation/Navigation'
 
@@ -22,7 +22,7 @@ const SignUp = () => {
             return setError('Please, agree to our terms and conditions.')
         }
         try {
-            const { data } = await axios.post('http://localhost:3001/api/account/signup', { email, name, password }, { withCredentials: true })
+            const { data } = await authAPI.post('account/signup', { email, name, password } )
             console.log(data)
         } catch (error) {
             console.log(error)

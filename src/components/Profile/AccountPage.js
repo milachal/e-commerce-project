@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import authAPI from '../../api/axios'
+import { Redirect } from 'react-router'
 import Navigation from '../Navigation/Navigation'
 import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
 import PersonalInfo from './PersonalInfo'
 import EditPersonalInfo from './EditPersonalInfo'
+// import Spinner from '../ui/Spinner'
 
 const AccountPage = () => {
 
@@ -12,13 +15,17 @@ const AccountPage = () => {
     const [email, setEmail] = useState('')
     const [error, setError] = useState('')
     const [showEdit, setShowEdit] = useState(false)
+    const [login, setLogin] = useState(true)
 
     useEffect(() => {
         const getUser = async () => {
             try {
-                const { data } = await axios.get('http://localhost:3001/api/account/me', { withCredentials: true })
-                setName(data.name)
-                setEmail(data.email)
+                const response = await authAPI.get('/account/me')
+                if (response.status === 401) {
+                    return setLogin(false)
+                }
+                setName(response.data.name)
+                setEmail(response.data.email)
             } catch (e) {
                 setError('Something went wrong. Please try again.')
             }
@@ -31,10 +38,12 @@ const AccountPage = () => {
     }
     return (
         <div>
+            {!login ? <Redirect to="/account/login" /> : null}
             <Navigation />
             <Header />
-            {/* errors */}
-            <span>{error}</span>
+            {/* <Spinner /> */}
+            {/* edit errors */}
+            <span>{error}</span> 
             {showEdit ? (
                 <EditPersonalInfo 
                     name={name}
@@ -48,6 +57,7 @@ const AccountPage = () => {
                     onClick={editPersonalInfo}
                 /> 
             )}
+            <Footer />
         </div>
     )
 }

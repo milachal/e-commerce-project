@@ -11,7 +11,7 @@ const Header = () => {
         <StyledHeader>
             <SearchBar />
             <span>
-                <Link to="/account/">  
+                <Link to="/account/me">  
                     <Icon src={User} alt="user-icon" />
                 </Link> 
             </span> 
