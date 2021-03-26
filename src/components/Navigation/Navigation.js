@@ -2,24 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-
-
 const Navigation = () => {
     
     return (
         <div>
             <Navbar>
-                <NavItem>
+                <li>
                     <StyledLink to='/'>Home</StyledLink>
-                </NavItem>
-                <NavItem>
+                </li>
+                <li>
                     <StyledLink to='/products'>Products</StyledLink>
-                </NavItem>
-                <NavItem>
-                    <StyledLink to='#'>My Account</StyledLink>
-                </NavItem>
-                <NavItem>Contact us</NavItem>
-                <NavItem>About us</NavItem>
+                </li>
+                <li>
+                    <StyledLink to='/account/me'>My Account</StyledLink>
+                </li>
+                <li>About us</li>
             </Navbar>
         </div>
     )
@@ -34,14 +31,13 @@ const Navbar = styled.ul`
     padding: 15px;
     width: 100%;
     text-transform: uppercase;
+    color: #fff;
 `
-const NavItem = styled.li`
-    color: white;
-    cursor: pointer;
-`
+
 const StyledLink = styled(Link)`
     text-decoration: none;
     color: white;
+    cursor: pointer;
 `
 
 export default Navigation;

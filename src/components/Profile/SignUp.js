@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import authAPI from '../../api/axios'
 import { StyledButton } from '../ui/Button'
@@ -13,6 +14,8 @@ const SignUp = () => {
     const [checkbox, setCheckbox] = useState(false)
     const [error, setError] = useState('')
 
+    const history = useHistory()
+
     const onSubmitHandler = async (e) => {
         e.preventDefault()
         if (password !== repeatPassword) {
@@ -23,6 +26,7 @@ const SignUp = () => {
         }
         try {
             const { data } = await authAPI.post('account/signup', { email, name, password } )
+            history.push('/')
             console.log(data)
         } catch (error) {
             console.log(error)

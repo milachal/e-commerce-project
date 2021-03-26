@@ -5,12 +5,12 @@ import Slider from 'react-slick';
 import ProductCard from '../../Products/ProductCard';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-
+import Spinner from '../../ui/Spinner'
 
 const Featured = () => {
 
   const [products, setProducts] = useState([])
+  const [loading, setLoading] = useState(true)
 
   let settings = {
       dots: true,
@@ -51,24 +51,29 @@ const Featured = () => {
       const getFeaturedProducts = async () => {
         const { data } = await axios.get('http://localhost:3001/api/products')
         setProducts(data.slice(0, 5))
+        setLoading(false)
       }
       getFeaturedProducts()
   }, [])
 
   return (
       <Container>
-          <Heading>Featured products</Heading>
-          <Slider {...settings}> 
-              {products.map((product => (
-                  <ProductContainer key={product._id}>
-                      <ProductCard
-                          src={product.image}
-                          title={product.title}
-                          price={`${product.price} lv`}
-                          id={product._id} /> 
-                  </ProductContainer> )
-              ))}           
-          </Slider>
+          {loading ? <Spinner /> : (
+            <>
+              <Heading>Featured products</Heading>
+              <Slider {...settings}> 
+                  {products.map((product => (
+                      <ProductContainer key={product._id}>
+                          <ProductCard
+                              src={product.image}
+                              title={product.title}
+                              price={`${product.price} lv`}
+                              id={product._id} /> 
+                      </ProductContainer> )
+                  ))}           
+              </Slider>
+            </>
+          )}
       </Container>
   )
 }
@@ -77,9 +82,11 @@ const ProductContainer = styled.div`
     width: 25%;
     display: inline-block;
 `
+
 const Container = styled.div`
     text-align: center;
 `
+
 const Heading = styled.h1`
     font-size: 3rem;
 `

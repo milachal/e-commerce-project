@@ -5,11 +5,12 @@ import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
 import Header from '../Header/Header'
 import AddToCartButton from '../Cart/AddtoCartButton'
-
+import Spinner from '../ui/Spinner'
 
 const ProductPage = () => {
 
     const [product, setProduct] = useState({})
+    const [loading, setLoading] = useState(true)
 
     const { id } = useParams() 
 
@@ -17,6 +18,7 @@ const ProductPage = () => {
         (async () => {
             try {
                 const { data } = await axios.get(`http://localhost:3001/api/products/${id}`)
+                setLoading(!loading)
                 setProduct(data)
             } catch (e) {
                 console.log(e)
@@ -32,16 +34,19 @@ const ProductPage = () => {
         <div>
             <Navigation />
             <Header />
-            <ImgContainer>
-                <Img src={product.image} alt={product._id} />
-            </ImgContainer>
-            <InfoContainer>
-                <h2>{product.title}</h2>
-                <h4>{`${product.price} lv`}</h4>
-                <AddToCartButton onClick={addToCart} />
-                <p>{product.description}</p>
-            </InfoContainer>
-                
+            {loading ? <Spinner /> : (
+                <>
+                    <ImgContainer>
+                        <Img src={product.image} alt={product._id} />
+                    </ImgContainer>
+                    <InfoContainer>
+                        <h2>{product.title}</h2>
+                        <h4>{`${product.price} lv`}</h4>
+                        <AddToCartButton onClick={addToCart} />
+                        <p>{product.description}</p>
+                    </InfoContainer>
+                </>   
+            )}   
         </div>
     )
 }

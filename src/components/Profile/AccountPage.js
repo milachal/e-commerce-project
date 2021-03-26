@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react'
+import { 
+    Redirect, 
+    useRouteMatch,
+    Route,
+    Switch
+} from 'react-router-dom'
 import authAPI from '../../api/axios'
-import { Redirect } from 'react-router'
+import { useAuth } from '../../hooks/index'
 import Navigation from '../Navigation/Navigation'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import PersonalInfo from './PersonalInfo'
 import EditPersonalInfo from './EditPersonalInfo'
-// import Spinner from '../ui/Spinner'
+import AccountMenu from './AccountMenu'
+import MyOrders from './MyOrders'
 
 const AccountPage = () => {
 
@@ -14,50 +21,67 @@ const AccountPage = () => {
     // const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
     const [error, setError] = useState('')
-    const [showEdit, setShowEdit] = useState(false)
     const [login, setLogin] = useState(true)
+
+    const { path, url } = useRouteMatch()
 
     useEffect(() => {
         const getUser = async () => {
             try {
+                
                 const response = await authAPI.get('/account/me')
                 if (response.status === 401) {
-                    return setLogin(false)
+                    
                 }
                 setName(response.data.name)
                 setEmail(response.data.email)
             } catch (e) {
-                setError('Something went wrong. Please try again.')
+                console.log(e)
+                return setLogin(false)
+                // setError('Something went wrong. Please try again.')
             }
         }
         getUser()
     }, [])
 
-    const editPersonalInfo = () => {
-        setShowEdit(!showEdit)
-    }
+    useAuth()
+
     return (
         <div>
-            {!login ? <Redirect to="/account/login" /> : null}
-            <Navigation />
-            <Header />
-            {/* <Spinner /> */}
-            {/* edit errors */}
-            <span>{error}</span> 
-            {showEdit ? (
-                <EditPersonalInfo 
-                    name={name}
-                    email={email}
-                    onChangeName={e => setName(e.target.value)}
-                    onChangeEmail={e => setEmail(e.target.value)}
-                /> ) : (
-                <PersonalInfo 
-                    name={name}
-                    email={email}
-                    onClick={editPersonalInfo}
-                /> 
+            {!login ? <Redirect to="/account/login" /> : (
+                <>
+                    <Navigation />
+                    <Header />
+                    {/* <Spinner /> */}
+                    {/* edit errors */}
+                    <span>{error}</span> 
+                    <AccountMenu />
+                    <Switch>
+                        <Route exact path={path}>
+                            <PersonalInfo 
+                                name={name}
+                                email={email}
+                                link={`${url}/edit`}
+                            />
+                        </Route>
+                        <Route path={`${path}/edit`}>
+                        <EditPersonalInfo 
+                            url={`${url}/`}
+                            name={name}
+                            email={email}
+                            nameValue={name || ''}
+                            emailValue={email || ''}
+                            onChangeName={e => setName(e.target.value)}
+                            onChangeEmail={e => setEmail(e.target.value)}
+                        /> 
+                        </Route>
+                        <Route path={`${path}/orders/history`}>
+                            <MyOrders />
+                        </Route>
+                    </Switch>
+                    <Footer />
+              </>
             )}
-            <Footer />
         </div>
     )
 }

@@ -38,10 +38,8 @@ const Login = () => {
             if (response.status === 200) {
                 return setLogin(true)
             }
-        } catch ({ response }) {
-            if (error.response && response.status === 401) {
-                return setError('Wrong credentials.')
-            }
+        } catch (e) {
+            return setError('Wrong credentials.')
         }
     }
     

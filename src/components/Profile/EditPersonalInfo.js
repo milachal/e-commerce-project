@@ -1,39 +1,44 @@
 import React from 'react'
-import axios from 'axios'
+import { useHistory } from 'react-router'
 import styled from 'styled-components'
+import authAPI from '../../api/axios'
 import { StyledButton } from '../ui/Button'
 
 const EditPersonalInfo = (props) => {
-
+    const history = useHistory()
     const saveEdits = async () => {
-        const { data } = await axios.patch('http://localhost:3001/api/account/edit', { 
+        await authAPI.patch('account/edit', { 
             name: props.name, 
             email: props.email 
         })
-        console.log(data)
+        history.push(props.url)
+    }
+
+    const deleteAccount = async () => {
+        await authAPI.delete('account/delete')
     }
 
     return (
         <Container>
             <h1>Edit your personal information</h1>
             <InputContainer>
-                    <Input 
-                        type="text" 
-                        name="name" 
-                        placeholder="Your name" 
-                        value={props.name}
-                        onChange={props.onChangeName}    
-                    />
-                </InputContainer>
+                <Input 
+                    type="text" 
+                    name="name" 
+                    placeholder="Your name" 
+                    value={props.nameValue}
+                    onChange={props.onChangeName}    
+                />
+            </InputContainer>
             <InputContainer>
-                    <Input 
-                        type="email" 
-                        name="email" 
-                        placeholder="email" 
-                        value={props.email}
-                        onChange={props.onChangeEmail}    
-                    />
-                </InputContainer>
+                <Input 
+                    type="email" 
+                    name="email" 
+                    placeholder="email" 
+                    value={props.emailValue}
+                    onChange={props.onChangeEmail}    
+                />
+            </InputContainer>
                 {/* <InputContainer>    
                     <Input 
                         type="password" 
@@ -44,6 +49,10 @@ const EditPersonalInfo = (props) => {
                     />
                 </InputContainer> */}
                 <Button type="submit" onClick={saveEdits}>Save</Button>
+                <div>
+                    <h3>Delete account</h3>
+                    <RedButton onClick={deleteAccount}>Delete</RedButton>
+                </div>
         </Container>
     )
 }
@@ -70,5 +79,10 @@ const Input = styled.input`
 
 const Button = styled(StyledButton)`
     margin: 0;
-    max-width: 200px;
+    max-width: 150px;
+`
+const RedButton = styled(StyledButton)`
+    margin: 0;
+    max-width: 150px;
+    background-color: red;
 `

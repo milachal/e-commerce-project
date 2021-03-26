@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom'
 import axios from 'axios'
 import styled from 'styled-components'
 import ProductCard from './ProductCard'
-
+import Spinner from '../ui/Spinner'
 
 const Products = () => {
 
@@ -11,6 +11,7 @@ const Products = () => {
     const location = useLocation()
     const searchKeyword = location.search 
     const keyword = new URLSearchParams(searchKeyword.toLowerCase()).get('search')
+    const [loading, setLoading] = useState(true)
     
     useEffect(() => {
         const fetchProducts = async () => {
@@ -24,11 +25,15 @@ const Products = () => {
                setProducts(data)
            }
         }
+        setLoading(!loading)
         fetchProducts()
     }, [keyword])
 
     return (
         <div> 
+            {loading ? <Spinner /> : (
+
+            
             <Container>
                 {products.map((product) => {
                     return (
@@ -43,6 +48,7 @@ const Products = () => {
                     )
                 })}
             </Container>
+            )}
         </div>
     )
 }
