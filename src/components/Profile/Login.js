@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import authAPI from '../../api/axios'
-import { Redirect } from 'react-router'
-
+import { useHistory } from 'react-router-dom'
+import { useAuth } from '../../hooks'
 import Navigation from '../Navigation/Navigation'
 import Button from '../ui/Button'
 import Spinner from '../ui/Spinner'
@@ -12,40 +12,30 @@ const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
-    const [login, setLogin] = useState(false)
     const [loading, setLoading] = useState(true)
+    const history = useHistory()
+    const login = useAuth(() => {
+        setLoading(false)
+    })
 
-    useEffect(() => {
-        const loadAccount = async () => {
-            try {
-                const response = await authAPI.get('account/me')
-                if (response.status === 200) {
-                    setLoading(!loading)
-                    return setLogin(true)
-                    
-                }
-            } catch (e) {
-                setLoading(!loading)
-                setLogin(false)
-            }
-        }
-        loadAccount()
-    }, [])
+    if (login) {
+        history.push('/account/me')
+    }
 
     const loginHandler = async () => {
         try {
             const response = await authAPI.post('account/login', { email, password } )
             if (response.status === 200) {
-                return setLogin(true)
+                history.push('/account/me')
             }
         } catch (e) {
+            console.log(e)
             return setError('Wrong credentials.')
         }
     }
     
     return (
         <>
-            {login ? <Redirect to="/account/me" /> : null}
             <Navigation />
             {loading ? <Spinner /> : (
                 <>
@@ -86,7 +76,7 @@ const Login = () => {
                         <br/>
                         <Button type="submit"><Link href="/account/signup">Create an account</Link></Button>
                     </SignupContainer>
-                    </>
+                </>
             )}
         </>
     )

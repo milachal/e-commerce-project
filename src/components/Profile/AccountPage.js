@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { 
-    Redirect, 
+import {
+    useHistory,
     useRouteMatch,
     Route,
     Switch
 } from 'react-router-dom'
 import authAPI from '../../api/axios'
-import { useAuth } from '../../hooks/index'
+import { useAuth } from '../../hooks'
+import Spinner from '../ui/Spinner'
 import Navigation from '../Navigation/Navigation'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
@@ -18,43 +19,39 @@ import MyOrders from './MyOrders'
 const AccountPage = () => {
 
     const [name, setName] = useState('')
+    const [loading, setLoading] = useState(true)
     // const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
-    const [error, setError] = useState('')
-    const [login, setLogin] = useState(true)
-
+    // const [error, setError] = useState('')
     const { path, url } = useRouteMatch()
-
-    useEffect(() => {
-        const getUser = async () => {
-            try {
-                
-                const response = await authAPI.get('/account/me')
-                if (response.status === 401) {
-                    
-                }
-                setName(response.data.name)
-                setEmail(response.data.email)
-            } catch (e) {
-                console.log(e)
-                return setLogin(false)
-                // setError('Something went wrong. Please try again.')
-            }
+    const history = useHistory()
+    
+    const getUser = async () => {
+        try {
+            const response = await authAPI.get('/account/me')
+            setName(response.data.name)
+            setEmail(response.data.email)
+            setLoading(false)
+        } catch (e) {
+            setLoading(false)
+            console.log(e)
         }
-        getUser()
-    }, [])
-
-    useAuth()
+    }
+ 
+    const login = useAuth(getUser, () => {
+        setLoading(false)
+        history.push('/account/login')
+    })
+    console.log(login)
 
     return (
-        <div>
-            {!login ? <Redirect to="/account/login" /> : (
+        <>
+            <Navigation />
+            {loading ? <Spinner /> : (
                 <>
-                    <Navigation />
                     <Header />
-                    {/* <Spinner /> */}
                     {/* edit errors */}
-                    <span>{error}</span> 
+                    {/* <span>{error}</span>  */}
                     <AccountMenu />
                     <Switch>
                         <Route exact path={path}>
@@ -79,10 +76,10 @@ const AccountPage = () => {
                             <MyOrders />
                         </Route>
                     </Switch>
-                    <Footer />
-              </>
-            )}
-        </div>
+                    <Footer /> 
+                </>
+            )}   
+        </>
     )
 }
 

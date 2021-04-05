@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import authAPI from '../../api/axios'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import Navigation from '../Navigation/Navigation'
@@ -26,8 +27,9 @@ const ProductPage = () => {
         })()
     }, [id])
 
-    const addToCart = () => {
-        
+    const addToCart = async () => {
+        const response = await authAPI.post('/cart', { products: id })
+        console.log(response)
     }
 
     return (
