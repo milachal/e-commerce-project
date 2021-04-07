@@ -6,16 +6,15 @@ const ProductQuantity = (props) => {
 
     const [productQuantity, setQuantity] = useState(props.quantity)
     
-    console.log(productQuantity)
-
     const addQuantity = async () => {
         const newQuantity = productQuantity + 1
         if (newQuantity > 10) {
             return
         }
         setQuantity(newQuantity)
-        console.log(productQuantity, 'add')
-        await authAPI.post('/cart', { productId: props.id, quantity: productQuantity + 1})
+        const { data } = await authAPI.post('/cart', { productId: props.id, quantity: newQuantity })
+        props.updateTotal(data)
+        console.log(props.updateTotal(data), 'addQuantity-updateTotal')
     }
 
     const minusQuantity = async () => {
@@ -24,8 +23,9 @@ const ProductQuantity = (props) => {
             return 
         }
         setQuantity(newQuantity)
-        console.log(productQuantity, 'minus')
-        await authAPI.post('/cart', { productId: props.id, quantity: productQuantity - 1 })
+        const { data } = await authAPI.post('/cart', { productId: props.id, quantity: newQuantity })
+        props.updateTotal(data)
+        console.log(props.updateTotal(data), 'minusQuantity-updateTotal')
     }
     return (
         <>

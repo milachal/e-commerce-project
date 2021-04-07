@@ -14,6 +14,9 @@ import AccountPage from './components/Profile/AccountPage'
 import SignUp from './components/Profile/SignUp'
 import Login from './components/Profile/Login'
 import Cart from './components/Cart/Cart'
+import CheckoutPage from './components/Cart/CheckoutPage'
+import OrderCompleted from './components/Orders/OrderCompleted'
+import OrderPage from './components/Orders/OrderPage'
 
 const Router = () => {
 
@@ -29,7 +32,10 @@ const Router = () => {
                 <Route path="/admin/add-product" component={AddProduct} />
                 <Route exact path="/admin" component={AdminPage} />
                 <Route path="/admin/edit-product/:id" component={EditProduct} />
-                <Route path="/cart" component={Cart} />
+                <Route exact path="/cart" component={Cart} />
+                <Route path="/cart/checkout" component={CheckoutPage} />
+                <Route path="/order/completed" component={OrderCompleted} />
+                <Route path="/order/history/:id" component={OrderPage} />
             </Switch>
         </BrowserRouter>
     )
