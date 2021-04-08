@@ -14,7 +14,6 @@ const ProductQuantity = (props) => {
         setQuantity(newQuantity)
         const { data } = await authAPI.post('/cart', { productId: props.id, quantity: newQuantity })
         props.updateTotal(data)
-        console.log(props.updateTotal(data), 'addQuantity-updateTotal')
     }
 
     const minusQuantity = async () => {
@@ -25,7 +24,6 @@ const ProductQuantity = (props) => {
         setQuantity(newQuantity)
         const { data } = await authAPI.post('/cart', { productId: props.id, quantity: newQuantity })
         props.updateTotal(data)
-        console.log(props.updateTotal(data), 'minusQuantity-updateTotal')
     }
     return (
         <>

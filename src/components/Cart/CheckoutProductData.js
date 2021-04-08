@@ -6,7 +6,6 @@ const CheckoutProductData = ({ productsData }) => {
     const productSum = (product) => {
         return product.price * product.quantity
     }
-    console.log(productsData)
 
     return (
         <>

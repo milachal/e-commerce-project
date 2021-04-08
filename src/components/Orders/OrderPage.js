@@ -17,7 +17,7 @@ const OrderPage = () => {
     const fetchOrders = async () => {
         const { data } = await authAPI.get(`/order/${id}`)
         console.log(data, 'data')
-        setOrder(data[0].products)
+        setOrder(data)
         setLoading(false)
     }
 
@@ -26,11 +26,19 @@ const OrderPage = () => {
         history.push('/account/login')
     })
   
+    const formatDate = date => {
+        const newDate = new Date(date)
+        return newDate.toLocaleDateString('bg-BG')
+    }
 
     return(
         <div>
             {loading ? <Spinner /> : (
-                <CheckoutProductData productsData={order} />
+                <>
+                    <h3>Order # {id}</h3>
+                    <h3>Date: {formatDate(order.createdAt)}</h3>
+                    <CheckoutProductData productsData={order.products} />
+                </>
             )}
         </div>
     )

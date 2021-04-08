@@ -1,7 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import Navigation from '../Navigation/Navigation'
 import Footer from '../Footer/Footer'
+import { StyledButton } from '../ui/Button'
 
 const OrderCompleted = () => {
     return (
@@ -9,6 +11,9 @@ const OrderCompleted = () => {
             <Navigation />
             <MessageContainer>
                 <h2>Thank you for your order! You'll be contacted shortly. </h2>
+                <Link to='/account/me'>
+                    <StyledButton>Back to profile</StyledButton>
+                </Link>
             </MessageContainer>
             <Footer />
         </>
