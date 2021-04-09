@@ -14,7 +14,7 @@ const Login = () => {
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(true)
     const history = useHistory()
-    const login = useAuth(() => {
+    const [login] = useAuth(() => {
         setLoading(false)
     })
 

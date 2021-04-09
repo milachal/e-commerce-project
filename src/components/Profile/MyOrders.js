@@ -12,6 +12,7 @@ const MyOrders = () => {
     const [emptyOrdersList, setEmptyOrdersList] = useState(false)
     const history = useHistory()
 
+    //set text for empty orders list
     const fetchOrders = async () => {
         const { data } = await authAPI.get('/order')
         if (data && data.length === 0) {
@@ -31,7 +32,7 @@ const MyOrders = () => {
         const newDate = new Date(date)
         return newDate.toLocaleDateString('bg-BG')
     }
-    console.log(orders)
+
     return (
         <div>
             <Title>My orders</Title>

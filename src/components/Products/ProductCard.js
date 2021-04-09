@@ -4,16 +4,14 @@ import { Link, useLocation } from 'react-router-dom'
 import ProductAdminInfo from '../admin/ProductAdminInfo'
 
 
-const ProductCard = ({ id, src, title, price}) => {
+const ProductCard = ({ id, src, title, price, userStatus, login}) => {
 
     const location = useLocation()
     const path = location.pathname
    
-    const re = /\/admin\/|\/admin/g
-
     return (
         <Container>
-            {re.test(path) ? <ProductAdminInfo productId={id} image={src} /> : null}
+            { login && userStatus === 'admin' ? <ProductAdminInfo productId={id} image={src} /> : null}
             <StyledLink to={`/product/${id}`}>
                 <ImgContainer>
                     <Img alt="product" src={src} />

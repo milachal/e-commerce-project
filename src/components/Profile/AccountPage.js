@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
     useHistory,
     useRouteMatch,
@@ -38,7 +38,7 @@ const AccountPage = () => {
         }
     }
  
-    const login = useAuth(getUser, () => {
+    const [login] = useAuth(getUser, () => {
         setLoading(false)
         history.push('/account/login')
     })

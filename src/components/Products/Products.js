@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import ProductCard from './ProductCard'
 import Spinner from '../ui/Spinner'
 
-const Products = () => {
+const Products = ({ userStatus, login }) => {
 
     const [products, setProducts] = useState([])
     const location = useLocation()
@@ -43,6 +43,8 @@ const Products = () => {
                                 title={product.title}
                                 price={`${product.price} lv`}
                                 id={product._id}
+                                userStatus={userStatus}
+                                login={login}
                             />
                         </ProductContainer>
                     )

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useParams, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
+import authAPI from '../../api/axios'
+import { useAuth } from '../../hooks'
 import AdminNavigation from './AdminNavigation'
 import Button from '../ui/Button'
 
@@ -14,6 +16,7 @@ const EditProduct = () => {
     const [category, setCategory] = useState('shoes')
     const [description, setDescription] = useState('')
     const [image, setImage] = useState('')
+    const [login, userStatus] = useAuth()
 
     const { id } = useParams()
     const history = useHistory()
@@ -50,7 +53,7 @@ const EditProduct = () => {
 
         const updateProduct = async () => {
             try {
-                await axios.patch(`http://localhost:3001/api/products/${id}`, { title, price, sex, category, description, image })
+                await authAPI.patch(`http://localhost:3001/api/products/${id}`, { title, price, sex, category, description, image })
                 history.push('/admin')
             } catch (e) {
                 alert('Unable to update product')
@@ -61,61 +64,65 @@ const EditProduct = () => {
 
     return (
         <>
-            {/* {onSubmitHandler ? <Redirect to="/admin/" /> : null} */}
-            <AdminNavigation />
-            <Container>
-                <Header>Edit product</Header>
-                <InputContainer>
-                    <Input 
-                        name="title" 
-                        type="text" 
-                        placeholder="Title" 
-                        value={title} onChange={e => setTitle(e.target.value)} 
-                    />
-                </InputContainer>
-                <InputContainer>
-                    <Input 
-                        name="price" 
-                        type="number" 
-                        placeholder="Price" 
-                        value={price} 
-                        onChange={e => setPrice(e.target.value)} 
-                    />
-                </InputContainer>
-                <InputContainer>
-                    <OptionList name="sex" value={sex} onChange={e => setSex(e.target.value)}>
-                        <option value="women's">Women's</option>
-                        <option value="men's">Men's</option>
-                        <option value="unisex">Unisex</option>
-                    </OptionList>
-                </InputContainer>
-                <InputContainer>   
-                    <OptionList name="product-category" value={category} onChange={e => setCategory(e.target.value)}>
-                        <option value="shoes">Shoes</option>
-                        <option value="accessories">Accessories</option>
-                        <option value="jewelry">Jewelry</option>
-                        <option value="bags">Bags</option>
-                        <option value="clothes">Clothes</option>
-                    </OptionList>
-                </InputContainer>
-                <InputContainer>
-                    <Textarea 
-                        name="description" 
-                        placeholder="Product's description" 
-                        value={description}
-                        onChange={e => setDescription(e.target.value)}
-                    />
-                </InputContainer>
-                <InputContainer>          
-                    <Input 
-                        type="text" 
-                        placeholder="Image URL" 
-                        value={image}
-                        onChange={e => setImage(e.target.value)}
-                    />
-                </InputContainer>
-                <Button type="submit" onClick={onSubmitHandler}>Submit</Button>
-            </Container>
+            {login && userStatus === 'admin' ? (
+                <>
+                    <AdminNavigation />
+                    <Container>
+                        <Header>Edit product</Header>
+                        <InputContainer>
+                            <Input 
+                                name="title" 
+                                type="text" 
+                                placeholder="Title" 
+                                value={title} onChange={e => setTitle(e.target.value)} 
+                            />
+                        </InputContainer>
+                        <InputContainer>
+                            <Input 
+                                name="price" 
+                                type="number" 
+                                placeholder="Price" 
+                                value={price} 
+                                onChange={e => setPrice(e.target.value)} 
+                            />
+                        </InputContainer>
+                        <InputContainer>
+                            <OptionList name="sex" value={sex} onChange={e => setSex(e.target.value)}>
+                                <option value="women's">Women's</option>
+                                <option value="men's">Men's</option>
+                                <option value="unisex">Unisex</option>
+                            </OptionList>
+                        </InputContainer>
+                        <InputContainer>   
+                            <OptionList name="product-category" value={category} onChange={e => setCategory(e.target.value)}>
+                                <option value="shoes">Shoes</option>
+                                <option value="accessories">Accessories</option>
+                                <option value="jewelry">Jewelry</option>
+                                <option value="bags">Bags</option>
+                                <option value="clothes">Clothes</option>
+                            </OptionList>
+                        </InputContainer>
+                        <InputContainer>
+                            <Textarea 
+                                name="description" 
+                                placeholder="Product's description" 
+                                value={description}
+                                onChange={e => setDescription(e.target.value)}
+                            />
+                        </InputContainer>
+                        <InputContainer>          
+                            <Input 
+                                type="text" 
+                                placeholder="Image URL" 
+                                value={image}
+                                onChange={e => setImage(e.target.value)}
+                            />
+                        </InputContainer>
+                        <Button type="submit" onClick={onSubmitHandler}>Submit</Button>
+                    </Container>
+                </>
+            ) : <div>No permission</div>}
+            
         </>
     )
 }

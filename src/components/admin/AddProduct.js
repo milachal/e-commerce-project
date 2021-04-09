@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
+import authAPI from '../../api/axios'
+import { useAuth } from '../../hooks'
 import Button from '../ui/Button'
 import AdminNavigation from './AdminNavigation'
 
@@ -13,6 +14,7 @@ const AddProduct = () => {
     const [category, setCategory] = useState('shoes')
     const [description, setDescription] = useState('')
     const [image, setImage] = useState('')
+    const [login, useerStatus] = useAuth()
 
     const history = useHistory()
 
@@ -33,7 +35,7 @@ const AddProduct = () => {
         } 
         const postProduct = async () => {
             try {
-                await axios.post('http://localhost:3001/api/add-new-product', { title, price, sex, category, description, image })
+                await authAPI.post('http://localhost:3001/api/add-new-product', { title, price, sex, category, description, image })
                 history.push('/admin')
             } catch (e) {
                 console.log('Unable to create product')
@@ -44,60 +46,65 @@ const AddProduct = () => {
 
     return (
         <>
-            <AdminNavigation />
-            <Container>
-                <Header>Add new product</Header>
-                <InputContainer>
-                    <Input 
-                        name="title" 
-                        type="text" 
-                        placeholder="Title" 
-                        value={title} onChange={e => setTitle(e.target.value)} 
-                    />
-                </InputContainer>
-                <InputContainer>
-                    <Input 
-                        name="price" 
-                        type="number" 
-                        placeholder="Price" 
-                        value={price} 
-                        onChange={e => setPrice(e.target.value)} 
-                    />
-                </InputContainer>
-                <InputContainer>
-                    <OptionList name="sex" value={sex} onChange={e => setSex(e.target.value)}>
-                        <option value="women's">Women's</option>
-                        <option value="men's">Men's</option>
-                        <option value="unisex">Unisex</option>
-                    </OptionList>
-                </InputContainer>
-                <InputContainer>   
-                    <OptionList name="product-category" value={category} onChange={e => setCategory(e.target.value)}>
-                        <option value="shoes">Shoes</option>
-                        <option value="accessories">Accessories</option>
-                        <option value="jewelry">Jewelry</option>
-                        <option value="bags">Bags</option>
-                        <option value="clothes">Clothes</option>
-                    </OptionList>
-                </InputContainer>
-                <InputContainer>
-                    <Textarea 
-                        name="description" 
-                        placeholder="Product's description" 
-                        value={description}
-                        onChange={e => setDescription(e.target.value)}
-                    />
-                </InputContainer>
-                <InputContainer>          
-                    <Input 
-                        type="text" 
-                        placeholder="Image URL" 
-                        value={image}
-                        onChange={e => setImage(e.target.value)}
-                    />
-                </InputContainer>
-                <Button type="submit" onClick={onSubmitHandler}>Submit</Button>
-            </Container>
+        {login && useerStatus === 'admin' ? (
+            <>
+                <AdminNavigation />
+                <Container>
+                    <Header>Add new product</Header>
+                    <InputContainer>
+                        <Input 
+                            name="title" 
+                            type="text" 
+                            placeholder="Title" 
+                            value={title} onChange={e => setTitle(e.target.value)} 
+                        />
+                    </InputContainer>
+                    <InputContainer>
+                        <Input 
+                            name="price" 
+                            type="number" 
+                            placeholder="Price" 
+                            value={price} 
+                            onChange={e => setPrice(e.target.value)} 
+                        />
+                    </InputContainer>
+                    <InputContainer>
+                        <OptionList name="sex" value={sex} onChange={e => setSex(e.target.value)}>
+                            <option value="women's">Women's</option>
+                            <option value="men's">Men's</option>
+                            <option value="unisex">Unisex</option>
+                        </OptionList>
+                    </InputContainer>
+                    <InputContainer>   
+                        <OptionList name="product-category" value={category} onChange={e => setCategory(e.target.value)}>
+                            <option value="shoes">Shoes</option>
+                            <option value="accessories">Accessories</option>
+                            <option value="jewelry">Jewelry</option>
+                            <option value="bags">Bags</option>
+                            <option value="clothes">Clothes</option>
+                        </OptionList>
+                    </InputContainer>
+                    <InputContainer>
+                        <Textarea 
+                            name="description" 
+                            placeholder="Product's description" 
+                            value={description}
+                            onChange={e => setDescription(e.target.value)}
+                        />
+                    </InputContainer>
+                    <InputContainer>          
+                        <Input 
+                            type="text" 
+                            placeholder="Image URL" 
+                            value={image}
+                            onChange={e => setImage(e.target.value)}
+                        />
+                    </InputContainer>
+                    <Button type="submit" onClick={onSubmitHandler}>Submit</Button>
+                </Container>
+            </>
+        ) : <div>No permission</div>}
+            
         </>
     )
 }

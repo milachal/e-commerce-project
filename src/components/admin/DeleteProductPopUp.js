@@ -1,8 +1,8 @@
 import React from 'react'
-import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { StyledButton } from '../ui/Button'
+import authAPI from '../../api/axios'
 
 const DeleteProductPopUp = ({ productId, closePopUp, image }) => {
 
@@ -11,7 +11,7 @@ const DeleteProductPopUp = ({ productId, closePopUp, image }) => {
 
     const deleteProduct = async (e) => {
         e.preventDefault()
-        await axios.delete(`http://localhost:3001/api/products/${productId}`)
+        await authAPI.delete(`http://localhost:3001/api/products/${productId}`)
         history.push('/admin')
     }
     

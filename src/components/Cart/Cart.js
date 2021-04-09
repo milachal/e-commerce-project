@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import authAPI from '../../api/axios'
-import { useHistory, Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useAuth } from '../../hooks/index'
 import Spinner from '../ui/Spinner'
 import Navigation from '../Navigation/Navigation'

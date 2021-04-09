@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import authAPI from '../../api/axios'
 import { useAuth } from '../../hooks'
 import { StyledButton } from '../ui/Button'
 import CheckoutProductData from './CheckoutProductData'
+import Spinner from '../ui/Spinner'
 
 const CheckoutPage = () => {
 
@@ -44,18 +45,21 @@ const CheckoutPage = () => {
 
     return (
         <>
-            <h2>Order Summary</h2>
-            
-            <div>    
-                <TotalWrapper>total: {orderTotal(productsData)}</TotalWrapper>
-                <CheckoutProductData productsData={productsData} />
-                <StyledBtn
-                    type="submit"
-                    onClick={orderHandler}
-                >
-                    Order
-                </StyledBtn>
+            {loading ? <Spinner /> : (
+              <>
+                <h2>Order Summary</h2>
+                <div>    
+                    <TotalWrapper>total: {orderTotal(productsData)}</TotalWrapper>
+                    <CheckoutProductData productsData={productsData} />
+                    <StyledBtn
+                        type="submit"
+                        onClick={orderHandler}
+                    >
+                        Order
+                    </StyledBtn>
             </div>
+              </>  
+            )}
         </>
     )
 }
