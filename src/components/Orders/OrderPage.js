@@ -36,6 +36,7 @@ const OrderPage = () => {
             {loading ? <Spinner /> : (
                 <>
                     <h3>Order # {id}</h3>
+                    <h3>Total: {order.total}</h3>
                     <h3>Date: {formatDate(order.createdAt)}</h3>
                     <CheckoutProductData productsData={order.products} />
                 </>

@@ -14,10 +14,10 @@ const SearchUser = () => {
     const submitHandler = async (e) => {
         e.preventDefault()
         const { data } = await authAPI.post('/admin/user', { email: userEmail })
+        console.log(data)
         setUserName(data.user.name)
         setUserStatus(data.user.status)
         setUserOrders(data.orders)
-        console.log(data)
     }
 
     return (

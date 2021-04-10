@@ -5,8 +5,8 @@ import UserOrderData from './UserOrderData'
 const UserData = ({ name, status, orders }) => {
     return (
         <Container>
-            <span>{name}</span><br/>
-            <span>{status}</span>
+            <span>name: {name}</span><br/>
+            <span>status: {status}</span>
             <UserOrderData orders={orders} />
         </Container>
     )

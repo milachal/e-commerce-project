@@ -35,9 +35,11 @@ const CheckoutPage = () => {
         return total.toFixed(2)
     }
 
+    const total = orderTotal(productsData)
+
     const orderHandler = async (e) => {
         e.preventDefault()
-        const response = await authAPI.post('/order')
+        const response = await authAPI.post('/order', { total })
         if (response.status === 200) {
             history.push('/order/completed')
         }
