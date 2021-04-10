@@ -32,7 +32,7 @@ const CheckoutPage = () => {
             console.log(currentPr.quantity, 'quantity')
             return acc + (currentPr.price * currentPr.quantity)
         }, 0)
-        return total
+        return total.toFixed(2)
     }
 
     const orderHandler = async (e) => {

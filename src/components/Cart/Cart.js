@@ -22,7 +22,7 @@ const Cart = () => {
         const totalPrice = products.reduce((acc, currentProduct) => {
             return acc + (currentProduct.price * currentProduct.quantity)
         }, 0)
-        return totalPrice
+        return totalPrice.toFixed(2)
     }
 
     const updateTotal = (products) => {

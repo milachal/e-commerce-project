@@ -13,6 +13,7 @@ const MyOrders = () => {
     const history = useHistory()
 
     //set text for empty orders list
+    //set total
     const fetchOrders = async () => {
         const { data } = await authAPI.get('/order')
         if (data && data.length === 0) {

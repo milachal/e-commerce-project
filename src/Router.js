@@ -7,9 +7,9 @@ import {
 import Home from './components/Home/Home'
 import ProductsPage from './components/Products/ProductsPage'
 import ProductPage from './components/Products/ProductPage'
-import AdminPage from './components/admin/AdminPage'
 import AddProduct from './components/admin/AddProduct'
 import EditProduct from './components/admin/EditProduct'
+import SearchUser from './components/admin/SearchUser'
 import AccountPage from './components/Profile/AccountPage'
 import SignUp from './components/Profile/SignUp'
 import Login from './components/Profile/Login'
@@ -30,8 +30,8 @@ const Router = () => {
                 <Route path ="/account/login" component={Login} />
                 <Route path="/account/me" component={AccountPage} />
                 <Route path="/admin/add-product" component={AddProduct} />
-                <Route exact path="/admin" component={AdminPage} />
                 <Route path="/admin/edit-product/:id" component={EditProduct} />
+                <Route path="/admin/search-user" component={SearchUser} />
                 <Route exact path="/cart" component={Cart} />
                 <Route path="/cart/checkout" component={CheckoutPage} />
                 <Route path="/order/completed" component={OrderCompleted} />

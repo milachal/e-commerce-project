@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 const CheckoutProductData = ({ productsData }) => {
-
+    console.log(productsData)
     const productSum = (product) => {
         return product.price * product.quantity
     }
