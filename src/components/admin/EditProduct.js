@@ -53,7 +53,7 @@ const EditProduct = () => {
 
         const updateProduct = async () => {
             try {
-                await authAPI.patch(`http://localhost:3001/api/products/${id}`, { title, price, sex, category, description, image })
+                await authAPI.patch(`/products/${id}`, { title, price, sex, category, description, image })
                 history.push('/admin')
             } catch (e) {
                 alert('Unable to update product')

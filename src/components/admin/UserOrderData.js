@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import CheckoutProductData from '../Cart/CheckoutProductData'
+import ChangeOrderStatus from './ChangeOrderStatus'
 
 const UserOrderData = ({ orders }) => {
 
@@ -13,12 +14,14 @@ const UserOrderData = ({ orders }) => {
         <div>
             {orders.map((order, index) => {
                 return (
-                    <Container>
-                        <span key={index}>
-                            <h3># {order._id}</h3>
-                            <span>Date: {formatDate(order.createdAt)}</span>
-                            <CheckoutProductData productsData={order.products} />
-                        </span>
+                    <Container key={index}>
+                        <h3># {order._id}</h3>
+                        <span>Date: {formatDate(order.createdAt)}</span>
+                        <ChangeOrderStatus 
+                            status={order.status} 
+                            orderId={order._id}    
+                        />
+                        <CheckoutProductData productsData={order.products} />
                     </Container>
                 )
             })}

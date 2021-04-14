@@ -3,7 +3,7 @@ import authAPI from '../api/axios'
 
 export const useAuth = (callback = () => {}, error) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [userStatus, setUserStatus] = useState('user')
+    const [userStatus, setUserStatus] = useState('')
 
     useEffect(() => {
         const getAuthStatus = async () => {
@@ -14,7 +14,8 @@ export const useAuth = (callback = () => {}, error) => {
                     setIsLoggedIn(true)
                     return callback()
                 }
-                if (response.status === 200) {
+                if (response.data.status === 'user' && response.status === 200) {
+                    setUserStatus('user')
                     setIsLoggedIn(true)
                     return callback()
                 }

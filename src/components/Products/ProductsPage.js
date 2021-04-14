@@ -9,7 +9,7 @@ import AdminPage from '../admin/AdminPage'
 const ProductsPage = () => {
 
     const [login, userStatus] = useAuth()
-
+    console.log(userStatus)
     return (
         <div>
             {login && userStatus === 'admin' ? (

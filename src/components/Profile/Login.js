@@ -2,32 +2,25 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import authAPI from '../../api/axios'
 import { useHistory } from 'react-router-dom'
-import { useAuth } from '../../hooks'
 import Navigation from '../Navigation/Navigation'
 import Button from '../ui/Button'
-import Spinner from '../ui/Spinner'
 
 const Login = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
-    const [loading, setLoading] = useState(true)
     const history = useHistory()
-    const [login] = useAuth(() => {
-        setLoading(false)
-    })
-
-    if (login) {
-        history.push('/account/me')
-    }
 
     const loginHandler = async () => {
         try {
             const response = await authAPI.post('account/login', { email, password } )
-            if (response.status === 200) {
+            if (response.status === 200 && response.data.status === 'admin') {
+                history.push('/admin/account/me')
+            } else if (response.status === 200 && response.data.status === 'user') {
                 history.push('/account/me')
             }
+            
         } catch (e) {
             console.log(e)
             return setError('Wrong credentials.')
@@ -37,47 +30,43 @@ const Login = () => {
     return (
         <>
             <Navigation />
-            {loading ? <Spinner /> : (
-                <>
-                    <LoginContainer>
+            <LoginContainer>
 
-                        <Header>Log in</Header>
-                        {error ? <Error>{error}</Error> : null}
-                        <InputContainer>
-                            <Input 
-                                type="email" 
-                                name="username" 
-                                placeholder="email" 
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}    
-                            />
-                        </InputContainer>
-                        <InputContainer>    
-                            <Input 
-                                type="password" 
-                                name="password" 
-                                placeholder="password" 
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}    
-                            />
-                        </InputContainer>
-                        <Button 
-                            type="submit"
-                            onClick={loginHandler}
-                        >
-                            Log in
-                        </Button>
-                        <br/>
-                        <ForgotPass>Forgot your password?</ForgotPass>
-                    </LoginContainer>
-                    <SignupContainer>
-                        <Header>Don't have an account?</Header>
-                        <Text>If you don't have an account, Textlease proceed by clicking the following button to continue first-time registration.</Text>
-                        <br/>
-                        <Button type="submit"><Link href="/account/signup">Create an account</Link></Button>
-                    </SignupContainer>
-                </>
-            )}
+                <Header>Log in</Header>
+                {error ? <Error>{error}</Error> : null}
+                <InputContainer>
+                    <Input 
+                        type="email" 
+                        name="username" 
+                        placeholder="email" 
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}    
+                    />
+                </InputContainer>
+                <InputContainer>    
+                    <Input 
+                        type="password" 
+                        name="password" 
+                        placeholder="password" 
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}    
+                    />
+                </InputContainer>
+                <Button 
+                    type="submit"
+                    onClick={loginHandler}
+                >
+                    Log in
+                </Button>
+                <br/>
+                <ForgotPass>Forgot your password?</ForgotPass>
+            </LoginContainer>
+            <SignupContainer>
+                <Header>Don't have an account?</Header>
+                <Text>If you don't have an account, Textlease proceed by clicking the following button to continue first-time registration.</Text>
+                <br/>
+                <Button type="submit"><Link href="/account/signup">Create an account</Link></Button>
+            </SignupContainer>
         </>
     )
 }

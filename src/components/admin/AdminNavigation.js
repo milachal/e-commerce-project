@@ -21,6 +21,9 @@ const AdminNavigation = () => {
                     <StyledLink to="/">Home</StyledLink>
                 </li>
                 <li>
+                    <StyledLink to="/products">Products</StyledLink>
+                </li>
+                <li>
                     <StyledLink to="/admin/add-product">Add new product</StyledLink>
                 </li>
                 <li>
@@ -42,6 +45,7 @@ const Navbar = styled.ul`
     list-style-type: none;
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     padding: 15px;
     width: 100%;
     text-transform: uppercase;
@@ -56,4 +60,7 @@ const StyledLink = styled(Link)`
 
 const StyledBtn = styled(StyledButton)`
     background-color: red;
+    text-align: center;
+    margin-left: 0;
+    width: 6rem;
 `

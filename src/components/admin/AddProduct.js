@@ -14,7 +14,7 @@ const AddProduct = () => {
     const [category, setCategory] = useState('shoes')
     const [description, setDescription] = useState('')
     const [image, setImage] = useState('')
-    const [login, useerStatus] = useAuth()
+    const [login, userStatus] = useAuth()
 
     const history = useHistory()
 
@@ -46,7 +46,7 @@ const AddProduct = () => {
 
     return (
         <>
-        {login && useerStatus === 'admin' ? (
+        {login && userStatus === 'admin' ? (
             <>
                 <AdminNavigation />
                 <Container>

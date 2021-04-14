@@ -75,6 +75,7 @@ const Container = styled.div`
     position: relative;
     display: inline-block;  
     text-align: center;
+    margin-left: 2rem;
 `
 
 const Search = styled.input`

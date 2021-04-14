@@ -17,6 +17,7 @@ import Cart from './components/Cart/Cart'
 import CheckoutPage from './components/Cart/CheckoutPage'
 import OrderCompleted from './components/Orders/OrderCompleted'
 import OrderPage from './components/Orders/OrderPage'
+import AdminProfilePage from './components/admin/AdminProfilePage'
 
 const Router = () => {
 
@@ -29,6 +30,7 @@ const Router = () => {
                 <Route path ="/account/signup" component={SignUp} />
                 <Route path ="/account/login" component={Login} />
                 <Route path="/account/me" component={AccountPage} />
+                <Route path="/admin/account/me" component={AdminProfilePage} />
                 <Route path="/admin/add-product" component={AddProduct} />
                 <Route path="/admin/edit-product/:id" component={EditProduct} />
                 <Route path="/admin/search-user" component={SearchUser} />
