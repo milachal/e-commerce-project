@@ -4,12 +4,14 @@ import authAPI from '../../api/axios'
 import { StyledButton } from '../ui/Button'
 import UserData from './UserData'
 import AdminNavigation from './AdminNavigation'
+import AdminHeader from './AdminHeader'
 
 const SearchUser = () => {
     const [userEmail, setUserEmail] = useState('')
     const [userName, setUserName] = useState('')
     const [userStatus, setUserStatus] = useState('')
     const [userOrders, setUserOrders] = useState([])
+    const [showUserData, setShowUserData] = useState(false)
 
     const submitHandler = async (e) => {
         e.preventDefault()
@@ -18,11 +20,13 @@ const SearchUser = () => {
         setUserName(data.user.name)
         setUserStatus(data.user.status)
         setUserOrders(data.orders)
+        setShowUserData(true)
     }
 
     return (
         <div>
             <AdminNavigation />
+            <AdminHeader />
             <InputContainer>
                 <Input 
                     type="text" 
@@ -32,11 +36,14 @@ const SearchUser = () => {
                 />
             </InputContainer>
            <StyledButton type="submit" onClick={submitHandler}>Search</StyledButton>
-           <UserData 
-                name={userName} 
-                status={userStatus}
-                orders={userOrders}
-            />
+           {showUserData ? (
+               <UserData 
+                    name={userName} 
+                    status={userStatus}
+                    orders={userOrders}
+                    userEmail={userEmail}
+                />
+           ) : null}
         </div>
     )
 }

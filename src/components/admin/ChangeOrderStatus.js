@@ -8,7 +8,7 @@ const ChangeOrderStatus = ({ status, orderId }) => {
     const [orderStatus, setOrderStatus] = useState(status)
     const changeOrderStatus = async (e) => {
         e.preventDefault()
-        await authAPI.patch(`order/${orderId}`, { status: orderStatus })
+        await authAPI.patch(`/admin/order/${orderId}`, { status: orderStatus })
     }
 
     console.log(orderId)

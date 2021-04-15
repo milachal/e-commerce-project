@@ -6,6 +6,7 @@ import Plus from '../../images/icons/plus.svg'
 import User from '../../images/icons/user.svg'
 
 const AdminHeader = () => {
+    
     return (
         <div>
             <SearchBar />
