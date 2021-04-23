@@ -25,7 +25,7 @@ const EditProduct = () => {
         const getProductById = async () => {
            const { data } = await axios.get(`http://localhost:3001/api/products/${id}`)
            setTitle(data.title)
-           setPrice(data.price)
+           setPrice(data.price.$numberDecimal)
            setSex(data.sex)
            setCategory(data.category)
            setDescription(data.description)
@@ -53,8 +53,15 @@ const EditProduct = () => {
 
         const updateProduct = async () => {
             try {
-                await authAPI.patch(`/products/${id}`, { title, price, sex, category, description, image })
-                history.push('/admin')
+                await authAPI.patch(`/products/${id}`, { 
+                    title, 
+                    price, 
+                    sex, 
+                    category, 
+                    description, 
+                    image 
+                })
+                history.push('/products')
             } catch (e) {
                 alert('Unable to update product')
             }

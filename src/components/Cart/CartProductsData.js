@@ -14,7 +14,7 @@ const CartProductsData = ({ cartProducts, updateTotal, deleteCartProduct }) => {
                         </span>
                         <Description>
                             <h4>{product.title}</h4>
-                            <p>{`${product.price}lv`}</p>
+                            <p>{`${product.price.$numberDecimal}lv`}</p>
                             <p>{product.description}</p>
                             <ProductQuantity 
                                 quantity={product.quantity}

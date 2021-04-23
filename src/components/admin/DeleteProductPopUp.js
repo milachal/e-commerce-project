@@ -1,26 +1,17 @@
 import React from 'react'
-import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { StyledButton } from '../ui/Button'
-import authAPI from '../../api/axios'
 
-const DeleteProductPopUp = ({ productId, closePopUp, image }) => {
-
-    const history = useHistory()
-    console.log(productId)
-
-    const deleteProduct = async (e) => {
-        e.preventDefault()
-        await authAPI.delete(`http://localhost:3001/api/products/${productId}`)
-        history.push('/admin')
-    }
+const DeleteProductPopUp = ({ deleteProduct, closePopUp, image }) => {
     
     return (
         <Container>
             <Text>Are you sure you want to delete this product?</Text>
-            <Button onClick={deleteProduct} >Yes</Button>
-            <Button onClick={closePopUp} >No</Button>
             <Image src={image} alt="product" />
+            <div>
+                <Button onClick={deleteProduct} >Yes</Button>
+                <Button onClick={closePopUp} >No</Button>
+            </div>
         </Container>
     )
 }
@@ -28,14 +19,15 @@ const DeleteProductPopUp = ({ productId, closePopUp, image }) => {
 export default DeleteProductPopUp
 
 const Container = styled.div`
-    box-shadow: 0 0 5px #575555;
+    border: 1px solid #C0C0C0;
     position: absolute;
     top: 5px;
     left: 5px;
     background-color: #fff;
+    z-index: 9999;
 `
 const Text = styled.h3`
-    padding: 2rem 1rem 0 1rem;
+    padding: 1rem 1rem 0 1rem;
     text-align: center;
     font-size: 20px;
 `
@@ -46,5 +38,5 @@ const Button = styled(StyledButton)`
         margin: 1rem 2rem;
 `
 const Image = styled.img`
-    width: 50%;
+    width: 40%;
 `

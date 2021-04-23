@@ -15,12 +15,12 @@ const Cart = () => {
     const [loading, setLoading] = useState(true)
     const [total, setTotal] = useState(0)
     const [emptyCart, setEmptyCart] = useState(false)
-
+    console.log(cartProducts)
     const history = useHistory()
 
     const calculateTotal = (products) => {
         const totalPrice = products.reduce((acc, currentProduct) => {
-            return acc + (currentProduct.price * currentProduct.quantity)
+            return acc + (currentProduct.price.$numberDecimal * currentProduct.quantity)
         }, 0)
         return totalPrice.toFixed(2)
     }

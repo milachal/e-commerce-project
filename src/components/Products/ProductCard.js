@@ -31,8 +31,7 @@ const StyledLink = styled(Link)`
 `
 
 const Img = styled.img `
-    max-width: 20rem;
-    max-height: 10rem;
+    max-height: 12rem;
     padding: 1rem;
     transition: transform .5s ease;
     &:hover {

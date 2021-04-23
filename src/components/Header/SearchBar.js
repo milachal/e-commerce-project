@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
@@ -9,6 +9,20 @@ const SearchBar = () => {
 
     const [keyword, setKeyword] = useState('')
     const [suggestions, setSuggestions] = useState([])
+    const [showSuggestions, setShowSuggestions] = useState(false)
+    const wrapperRef = useRef(null)
+
+    useEffect(() => {
+        const handleClickOutside = event => {
+            if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+                setShowSuggestions(false)
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+          document.removeEventListener("mousedown", handleClickOutside);
+        };
+      }, [wrapperRef])
 
     const getSearchKeyword = async (e) => {
         const newKeyword = e.target.value
@@ -18,9 +32,11 @@ const SearchBar = () => {
             setSuggestions(data.filter((product) => {
                 return product.title.toLowerCase().includes(newKeyword)
             }))
+            setShowSuggestions(true)
         }    
     }
-    
+    console.log(keyword)
+
     return (
         <Container>
             <Search 
@@ -33,7 +49,7 @@ const SearchBar = () => {
             >
                 <span>
                     <Link to={{
-                        pathname: "/products/",
+                        pathname: "/products",
                         search: `?search=${keyword}`
 
                     }}>
@@ -42,20 +58,23 @@ const SearchBar = () => {
                     
                 </span>
             </StyledButton>
-            {keyword !== '' ? (
-                <SuggestionsContainer>
-                    {suggestions.slice(0, 5).map(suggestion => {
-                        return (
-                            <SearchSuggestion 
-                                key={suggestion.id}
-                                src={suggestion.image}
-                                alt={suggestion.title}
-                                title={suggestion.title}
-                                price={suggestion.price}
-                                id={suggestion.id}
-                            />
-                        )
-                    })}
+            {showSuggestions ? (
+                <SuggestionsContainer ref={wrapperRef} >
+                    {suggestions && suggestions.length > 0 ? (
+                        suggestions.slice(0, 5).map(suggestion => {
+                            return (
+                                <SearchSuggestion 
+                                    key={suggestion.id}
+                                    src={suggestion.image}
+                                    alt={suggestion.title}
+                                    title={suggestion.title}
+                                    price={suggestion.price.$numberDecimal}
+                                    id={suggestion._id}
+                                />
+                            )
+                        })
+                        
+                    ) : <p>No results</p>}
                     {suggestions.length > 5 ? (
                         <StyledLink to={{
                             pathname: "/products",
@@ -86,6 +105,7 @@ const Search = styled.input`
     margin: 0.8rem 0;
 `
 const StyledButton = styled.button`
+    background: none;
     float: left; 
     border: none;
     cursor: pointer;
@@ -102,8 +122,8 @@ const SuggestionsContainer = styled.div`
     left: 0;
     top: 55px;
     background: white;
+    border: 1px solid #C0C0C0;
     width: 350px;
-    box-shadow: 0 0 5px #575555;
     padding: 20px;
     z-index: 9999;
 `

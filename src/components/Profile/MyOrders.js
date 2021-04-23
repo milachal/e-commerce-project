@@ -43,7 +43,7 @@ const MyOrders = () => {
                         <OrdersContainer key={obj._id}>
                             <h3>Order #: {obj._id}</h3>
                             <p>Date: {formatDate(obj.createdAt)}</p>
-                            <h3>Total: {obj.total}</h3>
+                            <h3>Total: {obj.total.$numberDecimal}</h3>
                             <Link to={`/order/history/${obj._id}`}>
                                 <StyledBtn>Preview</StyledBtn>
                             </Link>

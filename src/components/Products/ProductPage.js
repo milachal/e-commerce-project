@@ -11,8 +11,10 @@ import Spinner from '../ui/Spinner'
 const ProductPage = () => {
 
     const [product, setProduct] = useState({})
+    const [price, setPrice] = useState('')
     const [loading, setLoading] = useState(true)
 
+    console.log(price.$numberDecimal)
     const { id } = useParams() 
 
     useEffect(() => {
@@ -21,6 +23,7 @@ const ProductPage = () => {
                 const { data } = await axios.get(`http://localhost:3001/api/products/${id}`)
                 setLoading(!loading)
                 setProduct(data)
+                setPrice(data.price)
             } catch (e) {
                 console.log(e)
             }
@@ -43,9 +46,9 @@ const ProductPage = () => {
                     </ImgContainer>
                     <InfoContainer>
                         <h2>{product.title}</h2>
-                        <h4>{`${product.price} lv`}</h4>
-                        <AddToCartButton onClick={addToCart} />
+                        <h4>{`${price.$numberDecimal} lv`}</h4>
                         <p>{product.description}</p>
+                        <AddToCartButton onClick={addToCart} />
                     </InfoContainer>
                 </>   
             )}   
@@ -59,7 +62,6 @@ const ImgContainer = styled.div`
     text-align: center;
     width: 50%;
     display: inline-block;
-    margin-left: 3rem;
 `
 
 const Img = styled.img `
@@ -77,8 +79,8 @@ const InfoContainer = styled.div `
     margin-right: 3rem;
     max-width: 300px;
 
-    @media screen and (max-width: 980px) {
+    @media screen and (max-width: 900px) {
         display: block;
-        margin: 3rem;
+        margin-left: 3rem;
     }
 `

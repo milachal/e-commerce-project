@@ -29,6 +29,7 @@ const Products = ({ userStatus, login }) => {
         fetchProducts()
     }, [keyword])
 
+    console.log(products)
     return (
         <div> 
             {loading ? <Spinner /> : (
@@ -41,7 +42,7 @@ const Products = ({ userStatus, login }) => {
                             <ProductCard 
                                 src={product.image}
                                 title={product.title}
-                                price={`${product.price} lv`}
+                                price={`${product.price.$numberDecimal} lv`}
                                 id={product._id}
                                 userStatus={userStatus}
                                 login={login}

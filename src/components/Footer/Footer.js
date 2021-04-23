@@ -36,7 +36,7 @@ const StyledFooter = styled.footer`
     border-top: 1px solid black;
     text-align: center;
     bottom: 0;
-    margin-top: 1rem;
+    margin-top: 4rem;
 `
 const Container = styled.div`
     /* display: flex;

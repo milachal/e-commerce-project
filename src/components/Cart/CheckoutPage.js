@@ -30,7 +30,7 @@ const CheckoutPage = () => {
     const orderTotal = (products) => {
         const total = products.reduce((acc, currentPr) => {
             console.log(currentPr.quantity, 'quantity')
-            return acc + (currentPr.price * currentPr.quantity)
+            return acc + (currentPr.price.$numberDecimal * currentPr.quantity)
         }, 0)
         return total.toFixed(2)
     }

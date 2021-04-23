@@ -9,7 +9,7 @@ import AdminNavigation from './AdminNavigation'
 const AddProduct = () => {
 
     const [title, setTitle] = useState('')
-    const [price, setPrice] = useState('')
+    const [price, setPrice] = useState(0)
     const [sex, setSex] = useState('unisex')
     const [category, setCategory] = useState('shoes')
     const [description, setDescription] = useState('')
@@ -36,12 +36,18 @@ const AddProduct = () => {
         const postProduct = async () => {
             try {
                 await authAPI.post('http://localhost:3001/api/add-new-product', { title, price, sex, category, description, image })
-                history.push('/admin')
+                history.push('/products')
             } catch (e) {
                 console.log('Unable to create product')
             }
         }
         postProduct()
+    }
+
+    const handlePrice = e => {
+        // const priceNumber = Number(e.target.value)
+        setPrice(e.target.value)
+        // price.toFixed(2)
     }
 
     return (
@@ -65,7 +71,7 @@ const AddProduct = () => {
                             type="number" 
                             placeholder="Price" 
                             value={price} 
-                            onChange={e => setPrice(e.target.value)} 
+                            onChange={handlePrice} 
                         />
                     </InputContainer>
                     <InputContainer>

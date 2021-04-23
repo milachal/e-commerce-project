@@ -67,7 +67,7 @@ const Featured = () => {
                           <ProductCard
                               src={product.image}
                               title={product.title}
-                              price={`${product.price} lv`}
+                              price={`${product.price.$numberDecimal} lv`}
                               id={product._id} /> 
                       </ProductContainer> )
                   ))}           
