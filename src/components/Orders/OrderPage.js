@@ -13,10 +13,8 @@ const OrderPage = () => {
     const { id } = useParams()
     const history = useHistory()
 
-    console.log(order)
     const fetchOrders = async () => {
         const { data } = await authAPI.get(`/order/${id}`)
-        console.log(data, 'data')
         setOrder(data)
         setLoading(false)
     }

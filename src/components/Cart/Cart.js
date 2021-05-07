@@ -15,8 +15,9 @@ const Cart = () => {
     const [loading, setLoading] = useState(true)
     const [total, setTotal] = useState(0)
     const [emptyCart, setEmptyCart] = useState(false)
-    console.log(cartProducts)
     const history = useHistory()
+
+    console.log(cartProducts)
 
     const calculateTotal = (products) => {
         const totalPrice = products.reduce((acc, currentProduct) => {
@@ -26,10 +27,7 @@ const Cart = () => {
     }
 
     const updateTotal = (products) => {
-        console.log(products, 'products')
         setTotal(calculateTotal(products))
-        console.log(calculateTotal(products), 'func-updateTotal')
-        console.log(total, 'total-Cart')
     }
 
     const fetchCart = async () => {

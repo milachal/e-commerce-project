@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Navigation = () => {
 
     const [toggleHamburger, setToggleHamburger] = useState(false)
     const hamburgerRef = useRef(null)
-    console.log(hamburgerRef)
 
     useEffect(() => {
         const closeHamburger = (e) => {
@@ -34,13 +33,13 @@ const Navigation = () => {
                     toggleHamburger={toggleHamburger}
                 >
                     <NavbarItem>
-                        <StyledLink to='/'>Home</StyledLink>
+                        <StyledLink activeClassName="any" exact to='/'>Home</StyledLink>
                     </NavbarItem>
                     <NavbarItem>
-                        <StyledLink to='/products'>Products</StyledLink>
+                        <StyledLink activeClassName="any" to='/products'>Products</StyledLink>
                     </NavbarItem>
                     <NavbarItem>
-                        <StyledLink to='/account/me'>My Account</StyledLink>
+                        <StyledLink activeClassName="any" to='/account/me'>My Account</StyledLink>
                     </NavbarItem>
                     <NavbarItem>
                         About us
@@ -50,6 +49,8 @@ const Navigation = () => {
         </div>
     )
 }
+
+export default Navigation;
 
 const Navbar = styled.nav` 
     flex: 1;
@@ -97,10 +98,13 @@ const NavbarItem = styled.li`
     }
 `
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(NavLink)`
     text-decoration: none;
     color: white;
     cursor: pointer;
+    &.${props => props.activeClassName} {
+        border-bottom: 1px solid #ffff;
+    }
 `
 
 const HamburgerWrapper = styled.div`
@@ -157,4 +161,3 @@ const HamburgerLines = styled.div`
     }
 `
 
-export default Navigation;

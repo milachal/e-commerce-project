@@ -29,7 +29,6 @@ const Products = ({ userStatus, login }) => {
         fetchProducts()
     }, [keyword])
 
-    console.log(products)
     return (
         <div> 
             {loading ? <Spinner /> : (

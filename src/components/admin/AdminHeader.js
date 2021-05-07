@@ -24,6 +24,8 @@ const AdminHeader = () => {
     )
 }
 
+export default AdminHeader
+
 const StyledLink = styled(Link)`
     text-decoration: none;
     color: #fff;
@@ -41,5 +43,3 @@ const Icon = styled.img`
     cursor: pointer;
     margin: 0.8rem 0 0 0.8rem;
 `
-
-export default AdminHeader

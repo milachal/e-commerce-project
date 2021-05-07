@@ -15,6 +15,8 @@ const CartFooter = ({ total }) => {
     )
 }
 
+export default CartFooter
+
 const TotalWrapper = styled.span`
     margin: 3rem;
 `
@@ -23,5 +25,3 @@ const StyledLink = styled(Link)`
     text-decoration: none;
     color: #ffffff;
 `
-
-export default CartFooter

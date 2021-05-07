@@ -20,9 +20,9 @@ const OrderCompleted = () => {
     )
 }
 
+export default OrderCompleted
+
 const MessageContainer = styled.div`
     padding: 2rem;
     margin-left: 2rem;
 `
-
-export default OrderCompleted

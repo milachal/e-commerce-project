@@ -25,6 +25,8 @@ const ProductCard = ({ id, src, title, price, userStatus, login}) => {
     )
 }
 
+export default ProductCard;
+
 const StyledLink = styled(Link)`
     color: #000;
     text-decoration: none;
@@ -53,4 +55,3 @@ const Price = styled.h3`
     font-weight: 400;
 `
 
-export default ProductCard;

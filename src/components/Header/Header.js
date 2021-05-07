@@ -1,31 +1,53 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import User from '../../images/icons/user.svg'
 import Cart from '../../images/icons/shopping-cart.svg'
 import SearchBar from './SearchBar'
+import NotificationBadge from '../ui/NotificationBadge'
+import CartCountContext from '../../contexts/CartCountContext'
 
 const Header = () => {
+
+    const { cartCount } = useContext(CartCountContext)
 
     return(
         <StyledHeader>
             <SearchBar />
-            <span>
+            <AccountContainer>
                 <Link to="/account/me">  
                     <Icon src={User} alt="user-icon" />
                 </Link> 
-            </span> 
+            </AccountContainer> 
             <span>
                 <Link to="/cart">
-                    <Icon src={Cart} alt="cart-icon" />
+                    <CartContainer>
+                        <Icon src={Cart} alt="cart-icon" />     
+                        <NotificationBadge>
+                            {cartCount}
+                        </NotificationBadge>
+                    </CartContainer>
                 </Link>
             </span>
+            <div>
+            </div>
         </StyledHeader>
     )
 }
 
+export default Header;
+
 const StyledHeader = styled.header`
     margin: 3rem;
+`
+
+const AccountContainer = styled.span`
+    float: right;
+`
+
+const CartContainer = styled.div`
+    position: relative;
+    float: right;
 `
 
 const Icon = styled.img`
@@ -34,4 +56,3 @@ const Icon = styled.img`
     cursor: pointer;
     margin: 0.8rem;
 `
-export default Header;

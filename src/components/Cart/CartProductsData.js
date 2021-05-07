@@ -34,6 +34,8 @@ const CartProductsData = ({ cartProducts, updateTotal, deleteCartProduct }) => {
     )
 }
 
+export default CartProductsData
+
 const CartWrapper = styled.div`
     display: flex;
 `
@@ -62,4 +64,3 @@ const StyledBtn = styled.button`
     padding: 0;
 `
 
-export default CartProductsData

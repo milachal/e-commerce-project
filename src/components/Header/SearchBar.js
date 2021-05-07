@@ -35,7 +35,6 @@ const SearchBar = () => {
             setShowSuggestions(true)
         }    
     }
-    console.log(keyword)
 
     return (
         <Container>

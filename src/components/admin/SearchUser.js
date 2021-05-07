@@ -48,6 +48,8 @@ const SearchUser = () => {
     )
 }
 
+export default SearchUser
+
 const InputContainer = styled.div`
     margin: 1rem; 
 `
@@ -62,4 +64,3 @@ const Input = styled.input`
     box-shadow: 0 0 5px #575555;
 `
 
-export default SearchUser

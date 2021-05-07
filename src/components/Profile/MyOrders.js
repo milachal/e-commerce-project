@@ -55,6 +55,8 @@ const MyOrders = () => {
     )
 }
 
+export default MyOrders
+
 const Title = styled.h2`
     margin-left: 3rem;
     display: inline-block;
@@ -68,4 +70,3 @@ const StyledBtn = styled(StyledButton)`
     margin-left: 0;
     width: 10rem;
 `
-export default MyOrders

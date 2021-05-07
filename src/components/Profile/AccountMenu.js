@@ -16,13 +16,13 @@ const AccountMenu = () => {
             <LinksContainer>
                 <h3>My account</h3>
                 <li>
-                    <StyledLink to={url}>My account</StyledLink>
+                    <StyledLink activeClassName="any" exact to={url}>My account</StyledLink>
                 </li>
                 <li>
-                    <StyledLink to={`${url}/edit`}>Edit your profile</StyledLink>
+                    <StyledLink activeClassName="any" to={`${url}/edit`}>Edit your profile</StyledLink>
                 </li>
                 <li>
-                    <StyledLink to={`${url}/orders/history`}>My orders</StyledLink>
+                    <StyledLink activeClassName="any" to={`${url}/orders/history`}>My orders</StyledLink>
                 </li>
                 <li>Contact us</li>
                 <li>
@@ -40,8 +40,7 @@ const Container = styled.div`
         display: inline-block;
         font-size: 20px;  
     `
-    
-    const StyledLink = styled(NavLink)`
+ const StyledLink = styled(NavLink)`
         /* text-decoration: $props = props.active ? "underline" : "none"}; */
         text-decoration: none;
         color: #000;
@@ -50,6 +49,12 @@ const Container = styled.div`
         } */
         &:hover {
             color: #555353;
+        }
+        /* &.active {
+            text-decoration: underline;
+        } */
+        &.${props => props.activeClassName} {
+            border-bottom: 1px solid gray;
         }
     `
     

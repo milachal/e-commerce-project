@@ -11,8 +11,6 @@ const ChangeOrderStatus = ({ status, orderId }) => {
         await authAPI.patch(`/admin/order/${orderId}`, { status: orderStatus })
     }
 
-    console.log(orderId)
-
     return (
         <div>
             <span>Status: </span>
@@ -26,8 +24,8 @@ const ChangeOrderStatus = ({ status, orderId }) => {
     )
 }
 
+export default ChangeOrderStatus
+
 const StyledBtn = styled(StyledButton)`
     width: 5rem;
 `
-
-export default ChangeOrderStatus

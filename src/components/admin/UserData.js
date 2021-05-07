@@ -26,6 +26,8 @@ const UserData = ({ userEmail, name, status, orders }) => {
     )
 }
 
+export default UserData
+
 const Container = styled.div`
     margin: 1rem;
     padding: 2rem;
@@ -35,4 +37,3 @@ const StyledBtn = styled(StyledButton)`
     width: 5rem;
 `
 
-export default UserData

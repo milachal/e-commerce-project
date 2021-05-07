@@ -29,9 +29,9 @@ const UserOrderData = ({ orders }) => {
     )
 }
 
+export default UserOrderData
+
 const Container = styled.div`
     border-bottom: 1px solid gray;
 
 `
-
-export default UserOrderData

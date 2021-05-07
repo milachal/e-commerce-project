@@ -29,7 +29,6 @@ const CheckoutPage = () => {
 
     const orderTotal = (products) => {
         const total = products.reduce((acc, currentPr) => {
-            console.log(currentPr.quantity, 'quantity')
             return acc + (currentPr.price.$numberDecimal * currentPr.quantity)
         }, 0)
         return total.toFixed(2)
@@ -66,6 +65,8 @@ const CheckoutPage = () => {
     )
 }
 
+export default CheckoutPage
+
 const TotalWrapper = styled.div`
     padding: 2rem;
 `
@@ -80,4 +81,3 @@ const StyledBtn = styled(StyledButton)`
     }
 `
 
-export default CheckoutPage

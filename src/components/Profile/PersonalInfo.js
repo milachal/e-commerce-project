@@ -18,6 +18,8 @@ const PersonalInfo = (props) => {
     )
 }
 
+export default PersonalInfo
+
 const Container = styled.div`
     margin: 3rem;
 
@@ -46,4 +48,3 @@ const StyledLink = styled(Link)`
 
 `
 
-export default PersonalInfo

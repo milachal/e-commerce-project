@@ -15,10 +15,14 @@ const Featured = () => {
   let settings = {
       dots: true,
       infinite: true,
-      speed: 500,
+      speed: 2000,
+      // pauseOnHover: true,
       slidesToShow: 4,
       slidesToScroll: 1,
-      swipeToSlide: true,
+      autoplay: true,
+      autoplaySpeed: 4000,
+      cssEase: "linear",
+      draggable: false,
       responsive: [
           {
             breakpoint: 1024,
@@ -78,6 +82,8 @@ const Featured = () => {
   )
 }
 
+export default Featured;
+
 const ProductContainer = styled.div`
     width: 25%;
     display: inline-block;
@@ -90,5 +96,3 @@ const Container = styled.div`
 const Heading = styled.h1`
     font-size: 3rem;
 `
-
-export default Featured;

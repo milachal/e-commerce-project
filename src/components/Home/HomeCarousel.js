@@ -34,8 +34,8 @@ const HomeCarousel = () => {
     )
 }
 
+export default HomeCarousel
+
 const Image = styled.img`
     width: 100%;
 `
-
-export default HomeCarousel;

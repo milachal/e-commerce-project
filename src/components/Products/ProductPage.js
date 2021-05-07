@@ -14,7 +14,6 @@ const ProductPage = () => {
     const [price, setPrice] = useState('')
     const [loading, setLoading] = useState(true)
 
-    console.log(price.$numberDecimal)
     const { id } = useParams() 
 
     useEffect(() => {

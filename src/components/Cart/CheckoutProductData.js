@@ -2,7 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 const CheckoutProductData = ({ productsData }) => {
-    console.log(productsData)
     const productSum = (product) => {
         return product.price.$numberDecimal * product.quantity
     }
@@ -27,6 +26,8 @@ const CheckoutProductData = ({ productsData }) => {
     )
 }
 
+export default CheckoutProductData
+
 const Container = styled.div`
     display: flex;
 `
@@ -42,4 +43,3 @@ const Image = styled.img`
     max-width: 8rem;
 `
 
-export default CheckoutProductData
