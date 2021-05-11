@@ -1,33 +1,36 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { useHistory, Link } from 'react-router-dom'
-import { useAuth } from '../../hooks/index'
+import SpinnerContext from '../../contexts/SpinnerContext'
 import authAPI from '../../api/axios'
 import Spinner from '../ui/Spinner'
 import { StyledButton } from '../ui/Button'
 
 const MyOrders = () => {
-    const [loading, setLoading] = useState(true)
+    const { showSpinner, setShowSpinner } = useContext(SpinnerContext)
     const [orders, setOrders] = useState([])
     const [emptyOrdersList, setEmptyOrdersList] = useState(false)
     const history = useHistory()
 
     //set text for empty orders list
     //set total
-    const fetchOrders = async () => {
-        const { data } = await authAPI.get('/order')
-        if (data && data.length === 0) {
-            setLoading(false)
-            setEmptyOrdersList(true)
+    useEffect(() => {
+        const fetchOrders = async () => {
+            const { data } = await authAPI.get('/order')
+            if (data && data.length === 0) {
+                setShowSpinner(false)
+                setEmptyOrdersList(true)
+            }
+            setOrders(data)
+            setShowSpinner(false)
         }
-        setOrders(data)
-        setLoading(false)
-    }
+        fetchOrders()
+    }, [])
 
-    useAuth(fetchOrders, () => {
-        setLoading(false)
-        history.push('/account/login')
-    })
+    // useAuth(fetchOrders, () => {
+    //     setLoading(false)
+    //     history.push('/account/login')
+    // })
 
     const formatDate = date => {
         const newDate = new Date(date)
@@ -37,7 +40,7 @@ const MyOrders = () => {
     return (
         <div>
             <Title>My orders</Title>
-            {loading ? <Spinner /> : (
+            {showSpinner ? <Spinner /> : (
                 orders.map((obj) => {
                     return (
                         <OrdersContainer key={obj._id}>

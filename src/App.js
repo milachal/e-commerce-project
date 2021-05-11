@@ -1,33 +1,51 @@
 import React, { useState, useEffect } from 'react'
 import Router from './Router'
 import GlobalStyle from './globalStyles';
-import CartCountContext from './contexts/CartCountContext'
+import CartContext from './contexts/CartContext'
+import AuthContext from './contexts/AuthContext'
+import SpinnerContext from './contexts/SpinnerContext'
 import authAPI from './api/axios'
+import { useAuth } from './hooks'
 
 
 const App = () => {
 
-    const [cartCount, setCartCount] = useState(0)
+    const [cart, setCart] = useState({
+        count: 0,
+        products: []
+    })
+
+    const [isLoggedIn, loading, userStatus, setIsLoggedIn] = useAuth()
+
+    // const [showSpinner, setShowSpinner] = useState(true)
+
+    const fetchCart = async () => {
+        const { data } = await authAPI.get('/cart')
+        const fetchedCartCount = data.reduce((count, product) => {
+            return count + product.quantity
+        }, 0)
+        setCart({
+            count: fetchedCartCount,
+            products: data
+        })
+    }
     
     useEffect(() => {
-        const getCartCount = async () => {
-            const { data } = await authAPI.get('/cart')
-            const cartCount = data.reduce((count, product) => {
-                return count + product.quantity
-            }, 0)
-            setCartCount(cartCount)
-        }
-        getCartCount()
-    }, [cartCount])
+        fetchCart()
+    }, [])
 
-    console.log(cartCount)
+    console.log(cart)
 
     return (
         <>  
             <GlobalStyle />
-            <CartCountContext.Provider value={{cartCount, setCartCount}} >
-                <Router />
-            </CartCountContext.Provider>
+            <AuthContext.Provider value={{isLoggedIn, loading, userStatus, setIsLoggedIn}}>
+                {/* <SpinnerContext.Provider value={{showSpinner, setShowSpinner}}> */}
+                    <CartContext.Provider value={{cart, setCart, fetchCart}} >
+                        <Router />
+                    </CartContext.Provider>
+                {/* </SpinnerContext.Provider> */}
+            </AuthContext.Provider>
         </>
     )
 }

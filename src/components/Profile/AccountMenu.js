@@ -1,14 +1,23 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { NavLink, useHistory, useRouteMatch } from 'react-router-dom'
+import AuthContext from '../../contexts/AuthContext'
+import CartContext from '../../contexts/CartContext'
 
 const AccountMenu = () => {
-    
+
+    const { setIsLoggedIn } = useContext(AuthContext)
+    const { setCart } = useContext(CartContext)
     const { url } = useRouteMatch()
     const history = useHistory()
+
     const logoutUser = async(e) => {
-        e.preventDefault()
         document.cookie = "jwt-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+        setIsLoggedIn(false)
+        setCart({
+            count: 0,
+            products: []
+        })
         history.push('/')
     }
     return (
@@ -26,7 +35,7 @@ const AccountMenu = () => {
                 </li>
                 <li>Contact us</li>
                 <li>
-                    <StyledLink to={`${url}/logout`} onClick={logoutUser}>Log out</StyledLink>
+                    <LogoutButton onClick={logoutUser}>Log out</LogoutButton>
                 </li>
             </LinksContainer>
         </Container>
@@ -34,6 +43,10 @@ const AccountMenu = () => {
 }
 
 export default AccountMenu
+
+const LogoutButton = styled.span`
+    cursor: pointer;
+`
 
 const Container = styled.div`
         margin: 0 1rem 1rem 1rem;

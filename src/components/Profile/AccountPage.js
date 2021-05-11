@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import {
     useHistory,
     useRouteMatch,
@@ -6,7 +6,6 @@ import {
     Switch
 } from 'react-router-dom'
 import authAPI from '../../api/axios'
-import { useAuth } from '../../hooks'
 import Spinner from '../ui/Spinner'
 import Navigation from '../Navigation/Navigation'
 import Header from '../Header/Header'
@@ -15,34 +14,35 @@ import PersonalInfo from './PersonalInfo'
 import EditPersonalInfo from './EditPersonalInfo'
 import AccountMenu from './AccountMenu'
 import MyOrders from './MyOrders'
+import AuthContext from '../../contexts/AuthContext'
 
 const AccountPage = () => {
 
+    const { isLoggedIn, loading } = useContext(AuthContext)
     const [name, setName] = useState('')
-    const [loading, setLoading] = useState(true)
-    // const [password, setPassword] = useState('')
     const [email, setEmail] = useState('')
-    // const [error, setError] = useState('')
     const { path, url } = useRouteMatch()
     const history = useHistory()
-    
-    const getUser = async () => {
-        try {
-            const response = await authAPI.get('/account/me')
-            setName(response.data.name)
-            setEmail(response.data.email)
-            setLoading(false)
-        } catch (e) {
-            setLoading(false)
-            console.log(e)
+
+    useEffect(() => {
+
+        if (!loading && !isLoggedIn) {
+            history.push('/account/login')
+        }    
+
+        const getUser = async () => {
+            try {
+                const response = await authAPI.get('/account/me')
+                setName(response.data.name)
+                setEmail(response.data.email)
+                // setShowSpinner(false)
+            } catch (e) {
+                // setShowSpinner(false)
+                console.log(e)
+            }
         }
-    }
- 
-    const [login] = useAuth(getUser, () => {
-        setLoading(false)
-        history.push('/account/login')
-    })
-    console.log(login)
+        getUser()
+    }, [loading, isLoggedIn, history])
 
     return (
         <>

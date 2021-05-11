@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import ProductQuantity from './ProductQuantity'
 import Delete from '../../images/icons/delete.svg'
+import CartContext from '../../contexts/CartContext'
 
-const CartProductsData = ({ cartProducts, updateTotal, deleteCartProduct }) => {
+const CartProductsData = ({ updateTotal, deleteCartProduct }) => {
+
+    const { cart } = useContext(CartContext)
+
     return (
         <>
-            {cartProducts.map((product, index) => {
+            {cart.products.map((product, index) => {
                 return (
                     <CartWrapper key={index}>
                         <span>

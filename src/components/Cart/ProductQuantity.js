@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import authAPI from '../../api/axios'
-import CartCountContext from '../../contexts/CartCountContext'
+import CartContext from '../../contexts/CartContext'
 
 const ProductQuantity = (props) => {
 
     const [productQuantity, setQuantity] = useState(props.quantity)
-    const { cartCount, setCartCount } = useContext(CartCountContext)
+    const { cart, setCart } = useContext(CartContext)
     
     const addQuantity = async () => {
         const newQuantity = productQuantity + 1
@@ -15,7 +15,10 @@ const ProductQuantity = (props) => {
         }
         setQuantity(newQuantity)
         const { data } = await authAPI.post('/cart', { productId: props.id, quantity: newQuantity })
-        setCartCount(cartCount + 1)
+        setCart({
+            ...cart,
+            count: cart.count + 1
+        })
         props.updateTotal(data)
     }
 
@@ -27,7 +30,10 @@ const ProductQuantity = (props) => {
         setQuantity(newQuantity)
         console.log(props.id)
         const { data } = await authAPI.post('/cart', { productId: props.id, quantity: newQuantity })
-        setCartCount(cartCount - 1)
+        setCart({
+            ...cart,
+            count: cart.count - 1
+        })
         props.updateTotal(data)
     }
     return (

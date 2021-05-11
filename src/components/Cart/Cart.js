@@ -1,24 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect, useCallback } from 'react'
 import authAPI from '../../api/axios'
 import { useHistory } from 'react-router-dom'
-import { useAuth } from '../../hooks/index'
 import Spinner from '../ui/Spinner'
 import Navigation from '../Navigation/Navigation'
 import Header from '../Header/Header'
 import CartProductsData from '../Cart/CartProductsData'
 import CartFooter from '../Cart/CartFooter'
 import Footer from '../Footer/Footer'
+import CartContext from '../../contexts/CartContext'
+import AuthContext from '../../contexts/AuthContext'
 
 const Cart = () => {
     
-    const [cartProducts, setCartProducts] = useState([])
-    const [loading, setLoading] = useState(true)
+    const { cart, fetchCart } = useContext(CartContext)
+    const { isLoggedIn, loading } = useContext(AuthContext)
     const [total, setTotal] = useState(0)
     const [emptyCart, setEmptyCart] = useState(false)
     const history = useHistory()
-
-    console.log(cartProducts)
-
+    
     const calculateTotal = (products) => {
         const totalPrice = products.reduce((acc, currentProduct) => {
             return acc + (currentProduct.price.$numberDecimal * currentProduct.quantity)
@@ -26,25 +25,21 @@ const Cart = () => {
         return totalPrice.toFixed(2)
     }
 
-    const updateTotal = (products) => {
+    const updateTotal = useCallback((products) => {
         setTotal(calculateTotal(products))
-    }
+    }, [])
 
-    const fetchCart = async () => {
-        const { data } = await authAPI.get('/cart')
-        if (data && data.length === 0) {
-            setEmptyCart(true)
-            setLoading(false)
+    useEffect(() => {
+        if (!loading && !isLoggedIn) {
+            history.push('/account/login')
         }
-        setCartProducts(data)
-        updateTotal(data)
-        setLoading(false)
-    }
+        if (cart.products && cart.products.length === 0) {
+            setEmptyCart(true)
+        } else {
+            updateTotal(cart.products)
+        }
+    }, [loading, isLoggedIn, history, cart.products, updateTotal])
 
-    useAuth(fetchCart, () => {
-        setLoading(false)
-        history.push('/account/login')
-    })
     
     const deleteCartProduct = async (id) => {
 
@@ -64,7 +59,7 @@ const Cart = () => {
                 <>
                     <h2>Your cart</h2>
                     <CartProductsData 
-                        cartProducts={cartProducts}
+                        cartProducts={cart.products}
                         updateTotal={updateTotal}
                         deleteCartProduct={deleteCartProduct}
                     />

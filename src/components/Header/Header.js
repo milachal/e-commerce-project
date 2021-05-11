@@ -5,11 +5,11 @@ import User from '../../images/icons/user.svg'
 import Cart from '../../images/icons/shopping-cart.svg'
 import SearchBar from './SearchBar'
 import NotificationBadge from '../ui/NotificationBadge'
-import CartCountContext from '../../contexts/CartCountContext'
+import CartContext from '../../contexts/CartContext'
 
 const Header = () => {
 
-    const { cartCount } = useContext(CartCountContext)
+    const { cart } = useContext(CartContext)
 
     return(
         <StyledHeader>
@@ -24,7 +24,7 @@ const Header = () => {
                     <CartContainer>
                         <Icon src={Cart} alt="cart-icon" />     
                         <NotificationBadge>
-                            {cartCount}
+                            {cart.count}
                         </NotificationBadge>
                     </CartContainer>
                 </Link>

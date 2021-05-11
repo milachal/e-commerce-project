@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import authAPI from '../../api/axios'
 import { useHistory } from 'react-router-dom'
 import Navigation from '../Navigation/Navigation'
 import Button from '../ui/Button'
+import AuthContext from '../../contexts/AuthContext'
+import CartContext from '../../contexts/CartContext'
 
 const Login = () => {
-
+    
+    const { setIsLoggedIn } = useContext(AuthContext)
+    const { fetchCart } = useContext(CartContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
@@ -15,9 +19,14 @@ const Login = () => {
     const loginHandler = async () => {
         try {
             const response = await authAPI.post('account/login', { email, password } )
+            console.log(response, 'response')
             if (response.status === 200 && response.data.status === 'admin') {
+                setIsLoggedIn(true)
+                fetchCart()
                 history.push('/admin/account/me')
             } else if (response.status === 200 && response.data.status === 'user') {
+                setIsLoggedIn(true)
+                fetchCart()
                 history.push('/account/me')
             }
             
