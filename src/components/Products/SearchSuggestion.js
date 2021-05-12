@@ -6,7 +6,6 @@ const SearchSuggestion = props => {
     return(
         <StyledLink to={`/product/${props.id}`} >
             <Container>
-
                 <div>
                     <Image 
                         src={props.src} 

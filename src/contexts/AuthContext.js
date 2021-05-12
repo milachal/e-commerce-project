@@ -1,8 +1,9 @@
 import React from 'react'
 
 export default React.createContext({
-    isLoggedIn: false,
-    loading: true,
+    isUserLoggedIn: false,
+    isPageloading: true,
     userStatus: '',
-    setIsLoggedIn: () => {}
+    setUserStatus: () => {},
+    setIsUserLoggedIn: () => {}
 })

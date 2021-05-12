@@ -1,21 +1,20 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import authAPI from '../../api/axios'
-import { useAuth } from '../../hooks'
+import AuthContext from '../../contexts/AuthContext'
 import Button from '../ui/Button'
 import AdminNavigation from './AdminNavigation'
 
 const AddProduct = () => {
-
+    
+    const { userStatus, isUserLoggedIn } = useContext(AuthContext)
     const [title, setTitle] = useState('')
     const [price, setPrice] = useState(0)
     const [sex, setSex] = useState('unisex')
     const [category, setCategory] = useState('shoes')
     const [description, setDescription] = useState('')
     const [image, setImage] = useState('')
-    const [login, userStatus] = useAuth()
-
     const history = useHistory()
 
     const onSubmitHandler = (event) => {
@@ -52,7 +51,7 @@ const AddProduct = () => {
 
     return (
         <>
-        {login && userStatus === 'admin' ? (
+        {isUserLoggedIn && userStatus === 'admin' ? (
             <>
                 <AdminNavigation />
                 <Container>
@@ -134,28 +133,24 @@ const InputContainer = styled.div`
 const Input = styled.input`
     width: 50%;
     max-width: 300px;
-    border: 1px solid #ccc;
+    border: 1px solid #666666;
     padding: 7px 10px;
     margin: 0 2rem;
     border-radius: 5px;
-    box-shadow: 0 0 5px #575555;
 `
 
 const OptionList = styled.select`
     width: 10%;
-    border: 1px solid #ccc;
+    border: 1px solid #666666;
     padding: 5px 7px;
     margin: 0 2rem;
     border-radius: 5px;
-    box-shadow: 0 0 5px #575555;
-
 `
 
 const Textarea = styled.textarea`
     width: 22%;
-    border: 1px solid #ccc;
+    border: 1px solid #666666;
     padding: 7px 10px;
     margin: 0 2rem;
     border-radius: 5px;
-    box-shadow: 0 0 5px #575555;
 `

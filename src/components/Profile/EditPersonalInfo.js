@@ -14,13 +14,9 @@ const EditPersonalInfo = (props) => {
         history.push(props.url)
     }
 
-    const deleteAccount = async () => {
-        await authAPI.delete('account/delete')
-    }
-
     return (
         <Container>
-            <h1>Edit your personal information</h1>
+            <h2>Edit your personal information</h2>
             <InputContainer>
                 <Input 
                     type="text" 
@@ -39,20 +35,7 @@ const EditPersonalInfo = (props) => {
                     onChange={props.onChangeEmail}    
                 />
             </InputContainer>
-                {/* <InputContainer>    
-                    <Input 
-                        type="password" 
-                        name="password" 
-                        placeholder="password" 
-                        value={props.password}
-                        onChange={props.onChangePassword}    
-                    />
-                </InputContainer> */}
-                <Button type="submit" onClick={saveEdits}>Save</Button>
-                <div>
-                    <h3>Delete account</h3>
-                    <RedButton onClick={deleteAccount}>Delete</RedButton>
-                </div>
+            <Button type="submit" onClick={saveEdits}>Save</Button>
         </Container>
     )
 }
@@ -60,7 +43,12 @@ const EditPersonalInfo = (props) => {
 export default EditPersonalInfo
 
 const Container = styled.div`
-    margin: 3rem;
+    display: inline-block;
+    margin: 5rem;
+    @media only screen and (max-width: 780px) {
+        display: block; 
+        margin-left: 3rem;  
+    }
 `
 
 const InputContainer = styled.div`
@@ -70,19 +58,14 @@ const InputContainer = styled.div`
 const Input = styled.input`
     width: 80%;
     max-width: 300px;
-    border: 1px solid #ccc;
+    border: 1px solid #d6d6d6;
     padding: 12px 20px;
     margin: 0 2rem 0 0;
     border-radius: 5px;
-    box-shadow: 0 0 5px #575555;
+    /* box-shadow: 0 0 5px #575555; */
 `
 
 const Button = styled(StyledButton)`
     margin: 0;
     max-width: 150px;
-`
-const RedButton = styled(StyledButton)`
-    margin: 0;
-    max-width: 150px;
-    background-color: red;
 `

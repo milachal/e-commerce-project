@@ -1,5 +1,4 @@
-import React from 'react';
-import { useAuth } from '../../hooks'
+import React, { useContext } from 'react';
 import Navigation from '../Navigation/Navigation';
 import Featured from './Featured/Featured';
 import Header from '../Header/Header'
@@ -7,15 +6,15 @@ import HomeCarousel from './HomeCarousel';
 import Footer from '../Footer/Footer';
 import AdminNavigation from '../admin/AdminNavigation'
 import AdminHeader from '../admin/AdminHeader'
-
+import AuthContext from '../../contexts/AuthContext'
 
 const Home = () => {
 
-    const [login, userStatus] = useAuth()
+    const { isUserLoggedIn, userStatus } = useContext(AuthContext)
 
     return (
         <div>
-            {login && userStatus === 'admin' ? (
+            {isUserLoggedIn && userStatus === 'admin' ? (
                 <>
                     <AdminNavigation />
                     <AdminHeader />

@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 import authAPI from '../../api/axios'
 import { StyledButton } from '../ui/Button'
 import UserData from './UserData'
 import AdminNavigation from './AdminNavigation'
 import AdminHeader from './AdminHeader'
+import AuthContext from '../../contexts/AuthContext'
 
 const SearchUser = () => {
+
+    const { isUserLoggedIn, userStatus } = useContext(AuthContext)
     const [userEmail, setUserEmail] = useState('')
     const [userName, setUserName] = useState('')
-    const [userStatus, setUserStatus] = useState('')
+    const [editUserStatus, setEditUserStatus] = useState('')
     const [userOrders, setUserOrders] = useState([])
     const [showUserData, setShowUserData] = useState(false)
 
@@ -18,33 +21,37 @@ const SearchUser = () => {
         const { data } = await authAPI.post('/admin/user', { email: userEmail })
         console.log(data)
         setUserName(data.user.name)
-        setUserStatus(data.user.status)
+        setEditUserStatus(data.user.status)
         setUserOrders(data.orders)
         setShowUserData(true)
     }
 
     return (
-        <div>
-            <AdminNavigation />
-            <AdminHeader />
-            <InputContainer>
-                <Input 
-                    type="text" 
-                    value={userEmail} 
-                    onChange={e => setUserEmail(e.target.value)}
-                    placeholder="Enter user email" 
-                />
-            </InputContainer>
-           <StyledButton type="submit" onClick={submitHandler}>Search</StyledButton>
-           {showUserData ? (
-               <UserData 
-                    name={userName} 
-                    status={userStatus}
-                    orders={userOrders}
-                    userEmail={userEmail}
-                />
-           ) : null}
-        </div>
+        <>
+            {isUserLoggedIn && userStatus === 'admin' ? (
+                <div>
+                    <AdminNavigation />
+                    <AdminHeader />
+                    <InputContainer>
+                        <Input 
+                            type="text" 
+                            value={userEmail} 
+                            onChange={e => setUserEmail(e.target.value)}
+                            placeholder="Enter user email" 
+                        />
+                    </InputContainer>
+                <StyledButton type="submit" onClick={submitHandler}>Search</StyledButton>
+                {showUserData ? (
+                    <UserData 
+                            name={userName} 
+                            status={editUserStatus}
+                            orders={userOrders}
+                            userEmail={userEmail}
+                        />
+                ) : null}
+                </div>
+            ) : <p>No permission</p> }
+        </>
     )
 }
 

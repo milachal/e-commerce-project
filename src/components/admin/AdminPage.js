@@ -3,17 +3,13 @@ import Products from '../Products/Products'
 import AdminNavigation from './AdminNavigation'
 import AdminHeader from './AdminHeader'
 
-const AdminPage = ({ login, userStatus}) => {
-    
+const AdminPage = () => {
+
     return (
         <>
             <AdminNavigation />
             <AdminHeader />
-            <Products
-                userStatus={userStatus}
-                login={login}
-            />
-           
+            <Products/>  
         </>
     )
 }

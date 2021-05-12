@@ -1,13 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useContext } from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { StyledButton } from '../ui/Button'
+import AuthContext from '../../contexts/AuthContext'
 
 const AdminNavigation = () => {
 
     // TODO: admin navigation - flashes on products, add new user and home
-
+    const { setUserStatus } = useContext(AuthContext)
     const [toggleHamburger, setToggleHamburger] = useState(false)
     const hamburgerRef = useRef(null)
 
@@ -27,12 +28,8 @@ const AdminNavigation = () => {
     const history = useHistory()
 
     const logout = async(e) => {
-        e.preventDefault()
         document.cookie = "jwt-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-        //TODO: when I add the user to the context, delete this condition
-        if (history.location.pathname === '/') {
-            window.location.reload()
-        }
+        setUserStatus('')
         history.push('/')
 
     }
@@ -76,7 +73,7 @@ export default AdminNavigation
 const Navbar = styled.nav` 
     flex: 1;
     align-self: flex-start;
-    padding: 1rem 3rem;
+    padding: 0.5rem 2rem;
     display: flex;
     justify-content: space-between;
     background-color: black;
@@ -124,6 +121,7 @@ const StyledLink = styled(NavLink)`
     color: white;
     cursor: pointer;
     &.${props => props.activeClassName} {
+        font-weight: bold;
         border-bottom: 1px solid #ffff;
     }
 `

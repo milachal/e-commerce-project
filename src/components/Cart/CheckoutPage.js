@@ -1,32 +1,27 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import styled from 'styled-components'
 import { useHistory } from 'react-router-dom'
 import authAPI from '../../api/axios'
-import { useAuth } from '../../hooks'
 import { StyledButton } from '../ui/Button'
 import CheckoutProductData from './CheckoutProductData'
-import Spinner from '../ui/Spinner'
+import CartContext from '../../contexts/CartContext'
+import AuthContext from '../../contexts/AuthContext'
 
 const CheckoutPage = () => {
 
-    const [productsData, setProductsData] = useState([])
-    const [loading, setLoading] = useState(true)
+    const { cart, setCart } = useContext(CartContext)
+    const { isUserLoggedIn, isPageLoading } = useContext(AuthContext)
     const history = useHistory()
 
-    const fetchProducts = async () => {
-        const { data } = await authAPI.get('/cart')
-        if (data && data.length === 0) {
+    useEffect(() => {
+        if (!isPageLoading && !isUserLoggedIn) {
+            history.push('/account/login')
+        }
+        if (cart.products && cart.products.length === 0) {
             history.push('/account/me/orders/history')
         }
-        setProductsData(data)
-        setLoading(false)
-    }
+    }, [isUserLoggedIn, isPageLoading, history, cart.products])
     
-    useAuth(fetchProducts, () => {
-        setLoading(false)
-        history.push('/account/login')
-    })
-
     const orderTotal = (products) => {
         const total = products.reduce((acc, currentPr) => {
             return acc + (currentPr.price.$numberDecimal * currentPr.quantity)
@@ -34,48 +29,61 @@ const CheckoutPage = () => {
         return total.toFixed(2)
     }
 
-    const total = orderTotal(productsData)
+    const total = orderTotal(cart.products)
 
     const orderHandler = async (e) => {
         e.preventDefault()
         const response = await authAPI.post('/order', { total })
         if (response.status === 200) {
             history.push('/order/completed')
+            setCart({
+                count: 0,
+                products: []
+            })
         }
     }
 
     return (
         <>
-            {loading ? <Spinner /> : (
-              <>
-                <h2>Order Summary</h2>
+            <Heading>Order Summary</Heading>
                 <div>    
-                    <TotalWrapper>total: {orderTotal(productsData)}</TotalWrapper>
-                    <CheckoutProductData productsData={productsData} />
+                    <CheckoutProductData />
+                    <TotalWrapper>Total: 
+                        <NumbersContainer>
+                            {orderTotal(cart.products)}
+                        </NumbersContainer>
+                    </TotalWrapper>
                     <StyledBtn
                         type="submit"
                         onClick={orderHandler}
                     >
                         Order
                     </StyledBtn>
-            </div>
-              </>  
-            )}
+                </div>
         </>
     )
 }
 
 export default CheckoutPage
 
+const Heading = styled.h2`
+    margin-left: 2rem;
+    font-weight: 800;
+`
+
 const TotalWrapper = styled.div`
     padding: 2rem;
 `
 
+const NumbersContainer = styled.span`
+    font-weight: bold;
+    margin-left: 1rem;
+`
+
 const StyledBtn = styled(StyledButton)`
     background-color: red;
-    max-width: 30%;
+    max-width: 15rem;
     margin-left: 2rem;
-    //hover doesnt work
     &:hover{
         opacity: 0.8;
     }

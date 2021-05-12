@@ -4,6 +4,7 @@ const GlobalStyle = createGlobalStyle`
 
     html, body {
         height: 100%;
+        font-family: 'Montserrat', sans-serif;
     }
 
     #root {

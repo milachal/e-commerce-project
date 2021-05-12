@@ -6,14 +6,15 @@ import CartContext from '../../contexts/CartContext'
 
 const AccountMenu = () => {
 
-    const { setIsLoggedIn } = useContext(AuthContext)
+    const { setIsUserLoggedIn, setUserStatus } = useContext(AuthContext)
     const { setCart } = useContext(CartContext)
     const { url } = useRouteMatch()
     const history = useHistory()
 
     const logoutUser = async(e) => {
         document.cookie = "jwt-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-        setIsLoggedIn(false)
+        setIsUserLoggedIn(false)
+        setUserStatus('')
         setCart({
             count: 0,
             products: []
@@ -35,6 +36,9 @@ const AccountMenu = () => {
                 </li>
                 <li>Contact us</li>
                 <li>
+                    <StyledLink activeClassName="any" to={`${url}/delete-account`}>Delete Account</StyledLink>
+                </li>
+                <li>
                     <LogoutButton onClick={logoutUser}>Log out</LogoutButton>
                 </li>
             </LinksContainer>
@@ -44,8 +48,14 @@ const AccountMenu = () => {
 
 export default AccountMenu
 
-const LogoutButton = styled.span`
+const LogoutButton = styled.div`
+    display: inline-block;
     cursor: pointer;
+    background-color: #000;  
+    color: #fff;
+    padding: 10px 10px;
+    border-radius: 5px;
+    margin-top: 1rem; 
 `
 
 const Container = styled.div`
@@ -54,23 +64,16 @@ const Container = styled.div`
         font-size: 20px;  
     `
  const StyledLink = styled(NavLink)`
-        /* text-decoration: $props = props.active ? "underline" : "none"}; */
         text-decoration: none;
         color: #000;
-        /* &.active {
-            text-decoration: underline;
-        } */
         &:hover {
             color: #555353;
         }
-        /* &.active {
-            text-decoration: underline;
-        } */
         &.${props => props.activeClassName} {
             border-bottom: 1px solid gray;
         }
     `
     
-    const LinksContainer = styled.ul`
-        list-style-type: none;
-    `
+const LinksContainer = styled.ul`
+    list-style-type: none;
+`

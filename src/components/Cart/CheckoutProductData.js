@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
+import CartContext from '../../contexts/CartContext'
 
-const CheckoutProductData = ({ productsData }) => {
+const CheckoutProductData = () => {
+
+    const { cart } = useContext(CartContext)
+
     const productSum = (product) => {
-        return product.price.$numberDecimal * product.quantity
+        return (product.price.$numberDecimal * product.quantity).toFixed(2)
     }
 
     return (
         <>
-            {productsData.map(pr => {
+            {cart.products.map(pr => {
                 return (
                     <Container key={pr._id} >
                         <Wrapper>
@@ -16,8 +20,16 @@ const CheckoutProductData = ({ productsData }) => {
                         </Wrapper>
                         <div>
                             <h4>{pr.title}</h4>
-                            <Wrapper>price: {productSum(pr)}</Wrapper>
-                            <Wrapper>quantity: {pr.quantity}</Wrapper>
+                            <Wrapper>Price: 
+                                <NumbersContainer>
+                                    {productSum(pr)}
+                                </NumbersContainer>
+                            </Wrapper>
+                            <Wrapper>Quantity: 
+                                <NumbersContainer>
+                                    {pr.quantity}
+                                </NumbersContainer>
+                            </Wrapper>
                         </div>
                     </Container>
                 )
@@ -37,6 +49,10 @@ const Wrapper = styled.span`
     display: block;
 `
 
+const NumbersContainer = styled.span`
+    font-weight: bold;
+    margin-left: 1rem;
+`
 
 const Image = styled.img`
     padding: 1rem;

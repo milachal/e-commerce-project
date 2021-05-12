@@ -1,20 +1,18 @@
-import React from 'react'
-import { useAuth } from '../../hooks'
+import React, { useContext } from 'react'
 import Navigation from '../Navigation/Navigation'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import Products from './Products'
 import AdminPage from '../admin/AdminPage'
+import AuthContext from '../../contexts/AuthContext'
 
 const ProductsPage = () => {
 
-    const [login, userStatus] = useAuth()
-    console.log(userStatus)
+    const { isUserLoggedIn, userStatus } = useContext(AuthContext)
     return (
         <div>
-            {login && userStatus === 'admin' ? (
-                <AdminPage login={login} userStatus={userStatus} 
-                />) : (
+            {isUserLoggedIn && userStatus === 'admin' ? (
+                <AdminPage />) : (
                     <>
                         <Navigation />
                         <Header />

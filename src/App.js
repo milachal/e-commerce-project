@@ -3,7 +3,6 @@ import Router from './Router'
 import GlobalStyle from './globalStyles';
 import CartContext from './contexts/CartContext'
 import AuthContext from './contexts/AuthContext'
-import SpinnerContext from './contexts/SpinnerContext'
 import authAPI from './api/axios'
 import { useAuth } from './hooks'
 
@@ -15,9 +14,7 @@ const App = () => {
         products: []
     })
 
-    const [isLoggedIn, loading, userStatus, setIsLoggedIn] = useAuth()
-
-    // const [showSpinner, setShowSpinner] = useState(true)
+    const [isUserLoggedIn, isPageLoading, userStatus, setUserStatus, setIsUserLoggedIn] = useAuth()
 
     const fetchCart = async () => {
         const { data } = await authAPI.get('/cart')
@@ -34,17 +31,13 @@ const App = () => {
         fetchCart()
     }, [])
 
-    console.log(cart)
-
     return (
         <>  
             <GlobalStyle />
-            <AuthContext.Provider value={{isLoggedIn, loading, userStatus, setIsLoggedIn}}>
-                {/* <SpinnerContext.Provider value={{showSpinner, setShowSpinner}}> */}
+            <AuthContext.Provider value={{isUserLoggedIn, isPageLoading, userStatus, setUserStatus, setIsUserLoggedIn}}>
                     <CartContext.Provider value={{cart, setCart, fetchCart}} >
                         <Router />
                     </CartContext.Provider>
-                {/* </SpinnerContext.Provider> */}
             </AuthContext.Provider>
         </>
     )

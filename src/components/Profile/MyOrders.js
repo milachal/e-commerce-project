@@ -1,36 +1,30 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styled from 'styled-components'
 import { useHistory, Link } from 'react-router-dom'
-import SpinnerContext from '../../contexts/SpinnerContext'
 import authAPI from '../../api/axios'
 import Spinner from '../ui/Spinner'
 import { StyledButton } from '../ui/Button'
+import AuthContext from '../../contexts/AuthContext'
 
 const MyOrders = () => {
-    const { showSpinner, setShowSpinner } = useContext(SpinnerContext)
+
+    const { isPageLoading, isUserLoggedIn } = useContext(AuthContext)
     const [orders, setOrders] = useState([])
-    const [emptyOrdersList, setEmptyOrdersList] = useState(false)
     const history = useHistory()
 
-    //set text for empty orders list
     //set total
     useEffect(() => {
+
+        if (!isPageLoading && !isUserLoggedIn) {
+            history.push('/account/login')
+        } 
+
         const fetchOrders = async () => {
             const { data } = await authAPI.get('/order')
-            if (data && data.length === 0) {
-                setShowSpinner(false)
-                setEmptyOrdersList(true)
-            }
             setOrders(data)
-            setShowSpinner(false)
         }
         fetchOrders()
-    }, [])
-
-    // useAuth(fetchOrders, () => {
-    //     setLoading(false)
-    //     history.push('/account/login')
-    // })
+    }, [isPageLoading, isUserLoggedIn, history])
 
     const formatDate = date => {
         const newDate = new Date(date)
@@ -38,9 +32,9 @@ const MyOrders = () => {
     }
 
     return (
-        <div>
+        <OrdersWrapper>
             <Title>My orders</Title>
-            {showSpinner ? <Spinner /> : (
+            {orders && orders.length === 0 ? <TextContainer>No orders yet.</TextContainer> : (
                 orders.map((obj) => {
                     return (
                         <OrdersContainer key={obj._id}>
@@ -54,11 +48,20 @@ const MyOrders = () => {
                     )
                 })
             )}
-        </div>
+        </OrdersWrapper>
     )
 }
 
 export default MyOrders
+
+const OrdersWrapper = styled.div`
+    display: inline-block;
+    margin-left: 5rem;
+    @media only screen and (max-width: 780px) {
+        display: block; 
+        margin-left: 0;  
+    }
+`
 
 const Title = styled.h2`
     margin-left: 3rem;
@@ -66,6 +69,10 @@ const Title = styled.h2`
 `
 
 const OrdersContainer = styled.div`
+    margin: 2rem 3rem;
+`
+
+const TextContainer = styled.div`
     margin-left: 3rem;
 `
 

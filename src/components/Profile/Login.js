@@ -9,7 +9,7 @@ import CartContext from '../../contexts/CartContext'
 
 const Login = () => {
     
-    const { setIsLoggedIn } = useContext(AuthContext)
+    const { setIsUserLoggedIn, setUserStatus } = useContext(AuthContext)
     const { fetchCart } = useContext(CartContext)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -21,11 +21,13 @@ const Login = () => {
             const response = await authAPI.post('account/login', { email, password } )
             console.log(response, 'response')
             if (response.status === 200 && response.data.status === 'admin') {
-                setIsLoggedIn(true)
+                setIsUserLoggedIn(true)
+                setUserStatus('admin')
                 fetchCart()
                 history.push('/admin/account/me')
             } else if (response.status === 200 && response.data.status === 'user') {
-                setIsLoggedIn(true)
+                setIsUserLoggedIn(true)
+                setUserStatus('user')
                 fetchCart()
                 history.push('/account/me')
             }
@@ -72,7 +74,7 @@ const Login = () => {
             </LoginContainer>
             <SignupContainer>
                 <Header>Don't have an account?</Header>
-                <Text>If you don't have an account, Textlease proceed by clicking the following button to continue first-time registration.</Text>
+                <Text>If you don't have an account, please proceed by clicking the following button to continue first-time registration.</Text>
                 <br/>
                 <Button type="submit"><Link href="/account/signup">Create an account</Link></Button>
             </SignupContainer>
@@ -122,7 +124,7 @@ styled.input[type="placeholder"]
 const ForgotPass = styled.h6`
     display: inline-block;
     font-size: 80%;
-    margin: 1rem 9rem;
+    margin: 1rem 7.5rem;
     text-decoration: underline; 
     cursor: pointer;
     text-align: center; 

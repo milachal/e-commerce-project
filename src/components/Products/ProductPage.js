@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import authAPI from '../../api/axios'
 import { useParams } from 'react-router-dom'
@@ -7,9 +7,11 @@ import Navigation from '../Navigation/Navigation'
 import Header from '../Header/Header'
 import AddToCartButton from '../Cart/AddtoCartButton'
 import Spinner from '../ui/Spinner'
+import CartContext from '../../contexts/CartContext'
 
 const ProductPage = () => {
 
+    const { fetchCart } = useContext(CartContext)
     const [product, setProduct] = useState({})
     const [price, setPrice] = useState('')
     const [loading, setLoading] = useState(true)
@@ -30,8 +32,8 @@ const ProductPage = () => {
     }, [id])
 
     const addToCart = async () => {
-        const response = await authAPI.post('/cart', { products: id })
-        console.log(response)
+        await authAPI.post('/cart', { products: id })
+        fetchCart()
     }
 
     return (
@@ -69,6 +71,9 @@ const Img = styled.img `
     &:hover {
         transform: scale(1.5);
     }
+    @media screen and (max-width: 768px) {
+        margin-left: 3rem;
+    }
 `
 const InfoContainer = styled.div `
     display: inline-block;
@@ -78,7 +83,7 @@ const InfoContainer = styled.div `
     margin-right: 3rem;
     max-width: 300px;
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 768px) {
         display: block;
         margin-left: 3rem;
     }

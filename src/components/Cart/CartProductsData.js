@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import ProductQuantity from './ProductQuantity'
 import Delete from '../../images/icons/delete.svg'
 import CartContext from '../../contexts/CartContext'
@@ -13,24 +14,26 @@ const CartProductsData = ({ updateTotal, deleteCartProduct }) => {
             {cart.products.map((product, index) => {
                 return (
                     <CartWrapper key={index}>
-                        <span>
-                            <Image alt="product" src={product.image} />
-                        </span>
-                        <Description>
-                            <h4>{product.title}</h4>
-                            <p>{`${product.price.$numberDecimal}lv`}</p>
-                            <p>{product.description}</p>
-                            <ProductQuantity 
-                                quantity={product.quantity}
-                                id={product._id}
-                                updateTotal={updateTotal}
-                            />
-                        </Description>
-                        <span>
-                            <StyledBtn onClick={() => deleteCartProduct(product._id)} >
-                                <Icon src={Delete} alt="delete-icon" />
-                            </StyledBtn>
-                        </span>
+                            <StyledLink to={`/product/${product._id}`}>
+                                <span>
+                                    <Image alt="product" src={product.image} />
+                                </span>
+                            </StyledLink>
+                            <Description>
+                                <h4>{product.title}</h4>
+                                <p>{`${product.price.$numberDecimal}lv`}</p>
+                                <p>{product.description}</p>
+                                <ProductQuantity 
+                                    quantity={product.quantity}
+                                    id={product._id}
+                                    updateTotal={updateTotal}
+                                />
+                            </Description>
+                            <span>
+                                <StyledBtn onClick={() => deleteCartProduct(product._id)} >
+                                    <Icon src={Delete} alt="delete-icon" />
+                                </StyledBtn>
+                            </span>
                     </CartWrapper>
                 )
             })}
@@ -39,6 +42,12 @@ const CartProductsData = ({ updateTotal, deleteCartProduct }) => {
 }
 
 export default CartProductsData
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+`
 
 const CartWrapper = styled.div`
     display: flex;

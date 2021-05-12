@@ -28,4 +28,5 @@ export default ChangeOrderStatus
 
 const StyledBtn = styled(StyledButton)`
     width: 5rem;
+    margin-bottom: 1rem;
 `

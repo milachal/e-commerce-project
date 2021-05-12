@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react'
+import styled from 'styled-components'
 import authAPI from '../../api/axios'
 import { useHistory } from 'react-router-dom'
 import Spinner from '../ui/Spinner'
@@ -13,9 +14,8 @@ import AuthContext from '../../contexts/AuthContext'
 const Cart = () => {
     
     const { cart, fetchCart } = useContext(CartContext)
-    const { isLoggedIn, loading } = useContext(AuthContext)
+    const { isUserLoggedIn, isPageLoading } = useContext(AuthContext)
     const [total, setTotal] = useState(0)
-    const [emptyCart, setEmptyCart] = useState(false)
     const history = useHistory()
     
     const calculateTotal = (products) => {
@@ -30,15 +30,14 @@ const Cart = () => {
     }, [])
 
     useEffect(() => {
-        if (!loading && !isLoggedIn) {
+        if (!isPageLoading && !isUserLoggedIn) {
             history.push('/account/login')
         }
         if (cart.products && cart.products.length === 0) {
-            setEmptyCart(true)
         } else {
             updateTotal(cart.products)
         }
-    }, [loading, isLoggedIn, history, cart.products, updateTotal])
+    }, [isPageLoading, isUserLoggedIn, history, cart.products, updateTotal])
 
     
     const deleteCartProduct = async (id) => {
@@ -50,30 +49,49 @@ const Cart = () => {
         })
         fetchCart()      
     }
-
     return (
+
         <div>
             <Navigation />
             <Header />
-            {loading ? <Spinner /> : (
-                <>
-                    <h2>Your cart</h2>
-                    <CartProductsData 
-                        cartProducts={cart.products}
-                        updateTotal={updateTotal}
-                        deleteCartProduct={deleteCartProduct}
-                    />
-                </>
-            )}
-            {!emptyCart ? <CartFooter total={total} /> : (
-                <div>Your cart is empty.</div>
-            )
-
-            }
-            
+            <CartContainer>
+                {isPageLoading ? <Spinner /> : (
+                    <>
+                        <Heading>Your cart</Heading>
+                        <CartProductsData 
+                            cartProducts={cart.products}
+                            updateTotal={updateTotal}
+                            deleteCartProduct={deleteCartProduct}
+                        />
+                    </>
+                )}
+                </CartContainer>      
+                {cart.products && cart.products.length === 0 ?  <Text>Your cart is empty. Check our <StyledLink href='/products'>products</StyledLink>.</Text> : (
+                    <CartFooter total={total} />
+                )}
             <Footer />
         </div>
     )
 }
 
 export default Cart
+
+const Heading = styled.h1`
+    margin-left: 2rem;
+`
+
+const CartContainer = styled.div`
+    border: 1px solid #d6d6d6;
+    padding: 2rem;
+`
+
+const Text = styled.p`
+    margin: 4rem;
+    font-size: 18px;
+
+`
+
+const StyledLink= styled.a`
+    text-decoration: none;
+    color: red;
+`

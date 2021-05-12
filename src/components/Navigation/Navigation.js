@@ -61,7 +61,7 @@ const Navbar = styled.nav`
     align-items: center;
     background-color: black;
 
-    @media only screen and (max-width: 640px) {
+    @media only screen and (max-width: 768px) {
         width: 100%;
         top: 0;
     }
@@ -77,7 +77,7 @@ const NavbarItems = styled.ul`
     text-transform: uppercase;
     color: #fff;
 
-    @media only screen and (max-width: 640px) {
+    @media only screen and (max-width: 768px) {
         height: 100%;
         flex-direction: column;
         padding: 1rem 2rem;
@@ -92,7 +92,7 @@ const NavbarItem = styled.li`
     cursor: pointer;
     color: white;
 
-    @media only screen and (max-width: 640px) {
+    @media only screen and (max-width: 768px) {
         padding: 1rem 0;
         color: white;
     }
@@ -103,6 +103,7 @@ const StyledLink = styled(NavLink)`
     color: white;
     cursor: pointer;
     &.${props => props.activeClassName} {
+        font-weight: bold;
         border-bottom: 1px solid #ffff;
     }
 `
@@ -118,7 +119,7 @@ const HamburgerWrapper = styled.div`
     outline: none;
     cursor: pointer;
 
-    @media only screen and (max-width: 640px) {
+    @media only screen and (max-width: 768px) {
         display: flex;
         flex-direction: column;
         align-self: start;

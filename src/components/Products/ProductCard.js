@@ -1,23 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import ProductAdminInfo from '../admin/ProductAdminInfo'
+import AuthContext from '../../contexts/AuthContext'
 
+const ProductCard = ({ id, src, title, price }) => {
 
-const ProductCard = ({ id, src, title, price, userStatus, login}) => {
-
-    const location = useLocation()
-    const path = location.pathname
+    const { isUserLoggedIn, userStatus } = useContext(AuthContext)
    
     return (
         <Container>
-            { login && userStatus === 'admin' ? <ProductAdminInfo productId={id} image={src} /> : null}
+            { isUserLoggedIn && userStatus === 'admin' ? <ProductAdminInfo productId={id} image={src} /> : null}
             <StyledLink to={`/product/${id}`}>
                 <ImgContainer>
                     <Img alt="product" src={src} />
                 </ImgContainer>
                 <div>
-                    <h3>{title}</h3>
+                    <h4>{title}</h4>
                     <Price>{price}</Price>
                 </div>
             </StyledLink>
@@ -33,7 +32,7 @@ const StyledLink = styled(Link)`
 `
 
 const Img = styled.img `
-    max-height: 12rem;
+    max-height: 16rem;
     padding: 1rem;
     transition: transform .5s ease;
     &:hover {
@@ -41,7 +40,7 @@ const Img = styled.img `
     }
 `
 const ImgContainer = styled.div`
-    height: 11rem;
+    height: 15rem;
     overflow: hidden;
 `
 
@@ -51,7 +50,7 @@ const Container = styled.div`
     position: relative;
 
 `
-const Price = styled.h3`
+const Price = styled.h4`
     font-weight: 400;
 `
 

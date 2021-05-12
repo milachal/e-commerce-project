@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'
 const PersonalInfo = (props) => {
     return (
         <Container>
-                <h1>Hello, {props.name}</h1>
-                <h2>Personal information</h2>
+                <h2>Hello, {props.name}</h2>
+                <h3>Personal information</h3>
                 <p>{props.name}</p>
                 <p>{props.email}</p>
                     <StyledLink to={props.link}>
@@ -21,8 +21,12 @@ const PersonalInfo = (props) => {
 export default PersonalInfo
 
 const Container = styled.div`
-    margin: 3rem;
-
+    margin-left: 5rem;
+    display: inline-block;
+    @media only screen and (max-width: 780px) {
+        display: block; 
+        margin-left: 3rem;  
+    }
 `
 
 const Text = styled.div`
