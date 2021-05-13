@@ -1,18 +1,55 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
+import { useHistory } from 'react-router-dom'
 import authAPI from '../../api/axios'
 import { StyledButton } from '../ui/Button'
+import DeletePopUp from '../admin/DeletePopUp'
+import AuthContext from '../../contexts/AuthContext'
 
 const DeleteAccount = () => {
-
+    
+    const { setIsUserLoggedIn, setUserStatus } = useContext(AuthContext)
+    const [showPopUp, setShowPopUp] = useState(false)
+    const history = useHistory()
     const deleteAccount = async () => {
         await authAPI.delete('account/delete')
+        document.cookie = "jwt-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+        setIsUserLoggedIn(false)
+        setUserStatus('')
+        history.push('/')
     }
+
+    const handleClick = e => {
+        e.stopPropagation()
+        setShowPopUp(true)
+    }
+
+    const closePopUp = () => {
+        setShowPopUp(false)
+    }
+
+    // if (showPopUp) {
+    //     return (
+    //         <DeletePopUp 
+    //             text={'Are you sure you want to delete your account?'} 
+    //             deleteFunc={deleteAccount}
+    //             closePopUp={!showPopUp}
+    //         />
+    //     )
+    // }
 
     return (
         <Container>
             <h2>Delete account</h2>
-            <RedButton onClick={deleteAccount}>Delete</RedButton>
+            {showPopUp ? (
+                <PopUpWrapper>
+                    <DeletePopUp 
+                        text={'Are you sure you want to delete your account?'} 
+                        deleteFunc={deleteAccount}
+                        closePopUp={closePopUp}
+                    />
+                </PopUpWrapper>
+            ): <RedButton onClick={handleClick}>Delete</RedButton>}
         </Container>
     )
 }
@@ -20,6 +57,7 @@ const DeleteAccount = () => {
 export default DeleteAccount
 
 const Container = styled.div`
+    vertical-align: top;
     margin-left: 5rem;
     display: inline-block;
     @media only screen and (max-width: 768px) {
@@ -32,4 +70,9 @@ const RedButton = styled(StyledButton)`
     margin: 0;
     max-width: 8rem;
     background-color: red;
+`
+
+const PopUpWrapper = styled.div`
+    text-align: center;
+    border: 1px solid #6666;
 `

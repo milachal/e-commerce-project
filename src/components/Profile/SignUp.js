@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import authAPI from '../../api/axios'
 import { StyledButton } from '../ui/Button'
 import Navigation from '../Navigation/Navigation'
+import AuthContext from '../../contexts/AuthContext'
 
 const SignUp = () => {
 
+    const { setIsUserLoggedIn } = useContext(AuthContext)
     const [email, setEmail] = useState('')
     const [name, setName] = useState('')
     const [password, setPassword] = useState('')
@@ -25,9 +27,12 @@ const SignUp = () => {
             return setError('Please, agree to our terms and conditions.')
         }
         try {
-            const { data } = await authAPI.post('account/signup', { email, name, password } )
+            const response = await authAPI.post('account/signup', { email, name, password } )
             history.push('/')
-            console.log(data)
+            if (response.data.status === 'user') {
+                setIsUserLoggedIn(true)
+            }
+            console.log(response)
         } catch (error) {
             console.log(error)
             if (error.response && error.response.status === 500) {
@@ -43,7 +48,7 @@ const SignUp = () => {
         <>
             <Navigation />
             <Container>
-                <FormContainer>
+                <form>
                     <Header>Sign up</Header>
                     {error ? <Error>{error}</Error> : null}
                     <Input 
@@ -85,7 +90,7 @@ const SignUp = () => {
                         By creating an account you agree to our <a href="#">Terms&#38;Privacy</a>
                     </TextContainer>
                     <Button type="submit" onClick={onSubmitHandler}>Submit</Button>
-                </FormContainer>
+                </form>
             </Container>
         </>
     )
@@ -97,28 +102,19 @@ const Container = styled.div`
     display: inline-block;
 `
 
-const FormContainer = styled.form`
-    display: inline-block;
-    width: 50%;
-    @media screen and (max-width: 980px) {
-        display: block;
-        width: 100%;
-    }
-`
-
 const Header = styled.h2`
     font-size: 200%;
     margin-left: 2rem;  
 `
 
 const Input = styled.input`
+    display: block;
     width: 80%;
     max-width: 300px;
-    border: 1px solid #ccc;
+    border: 1px solid #6666;
     padding: 12px 20px;
     margin: 0.5rem 2rem;
     border-radius: 5px;
-    box-shadow: 0 0 5px #575555;
 `
 
 const TextContainer = styled.div`

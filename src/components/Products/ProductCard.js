@@ -45,10 +45,10 @@ const ImgContainer = styled.div`
 `
 
 const Container = styled.div`
-    margin: 1rem;
+    padding-bottom: 10px;
     text-align: center;
     position: relative;
-
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 1px 4px;
 `
 const Price = styled.h4`
     font-weight: 400;

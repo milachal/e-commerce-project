@@ -15,19 +15,24 @@ const Products = () => {
     
     useEffect(() => {
         const fetchProducts = async () => {
-           const { data } = await axios.get('http://localhost:3001/api/products')
+            try {
+                const { data } = await axios.get('http://localhost:3001/api/products')
 
-           if (keyword) {
-               setProducts(data.filter((product) => {
-                   return product.title.toLowerCase().includes(keyword)
-               }))
-           } else {
-               setProducts(data)
-           }
+                if (keyword) {
+                    setProducts(data.filter((product) => {
+                        return product.title.toLowerCase().includes(keyword)
+                    }))
+                } else {
+                    setProducts(data)
+                }
+                setLoading(false)
+            } catch (e) {
+                console.log(e)
+                return 'Something went wrong. Please try again.'
+            }
         }
-        setLoading(!loading)
         fetchProducts()
-    }, [keyword])
+    }, [keyword, loading])
 
     return (
         <div> 
@@ -56,9 +61,9 @@ export default Products
 const ProductContainer = styled.div`
     display: inline-block;
     width: 20%;
-    margin: 0 0.5rem 1.5rem;
-    height: 22rem;
+    margin: 0 0.5rem 1rem;
     vertical-align: top;
+    
     /* border: 1px solid #c8c8c8; */
     /* box-shadow: 2px 0px 10px 2px rgba(142,142,142,0.75);
     -webkit-box-shadow: 2px 0px 10px 2px rgba(142,142,142,0.75);

@@ -38,7 +38,7 @@ const Header = () => {
 export default Header;
 
 const StyledHeader = styled.header`
-    margin: 3rem;
+    margin: 2rem;
 `
 
 const AccountContainer = styled.span`

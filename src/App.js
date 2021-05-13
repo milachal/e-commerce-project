@@ -14,7 +14,7 @@ const App = () => {
         products: []
     })
 
-    const [isUserLoggedIn, isPageLoading, userStatus, setUserStatus, setIsUserLoggedIn] = useAuth()
+    const { isUserLoggedIn, isPageLoading, userStatus, setUserStatus, setIsUserLoggedIn } = useAuth()
 
     const fetchCart = async () => {
         const { data } = await authAPI.get('/cart')

@@ -11,7 +11,7 @@ const AccountMenu = () => {
     const { url } = useRouteMatch()
     const history = useHistory()
 
-    const logoutUser = async(e) => {
+    const logoutUser = async() => {
         document.cookie = "jwt-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
         setIsUserLoggedIn(false)
         setUserStatus('')

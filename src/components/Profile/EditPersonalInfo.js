@@ -43,6 +43,7 @@ const EditPersonalInfo = (props) => {
 export default EditPersonalInfo
 
 const Container = styled.div`
+    vertical-align: top;
     display: inline-block;
     margin: 5rem;
     @media only screen and (max-width: 780px) {

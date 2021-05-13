@@ -8,7 +8,7 @@ import AuthContext from '../../contexts/AuthContext'
 const AdminNavigation = () => {
 
     // TODO: admin navigation - flashes on products, add new user and home
-    const { setUserStatus } = useContext(AuthContext)
+    const { setIsUserLoggedIn, setUserStatus } = useContext(AuthContext)
     const [toggleHamburger, setToggleHamburger] = useState(false)
     const hamburgerRef = useRef(null)
 
@@ -30,6 +30,7 @@ const AdminNavigation = () => {
     const logout = async(e) => {
         document.cookie = "jwt-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
         setUserStatus('')
+        setIsUserLoggedIn(false)
         history.push('/')
 
     }

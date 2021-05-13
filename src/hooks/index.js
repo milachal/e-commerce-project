@@ -33,5 +33,5 @@ export const useAuth = () => {
         getAuthStatus()
     }, [])
 
-    return [isUserLoggedIn, isPageLoading, userStatus, setIsUserLoggedIn, setUserStatus]
+    return { isUserLoggedIn, isPageLoading, userStatus, setIsUserLoggedIn, setUserStatus }
 }

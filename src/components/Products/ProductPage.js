@@ -29,7 +29,7 @@ const ProductPage = () => {
                 console.log(e)
             }
         })()
-    }, [id])
+    }, [id, loading])
 
     const addToCart = async () => {
         await authAPI.post('/cart', { products: id })

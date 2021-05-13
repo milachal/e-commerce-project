@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import { useParams, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import authAPI from '../../api/axios'
-import { useAuth } from '../../hooks'
+import AuthContext from '../../contexts/AuthContext'
 import AdminNavigation from './AdminNavigation'
 import Button from '../ui/Button'
 
@@ -16,8 +16,7 @@ const EditProduct = () => {
     const [category, setCategory] = useState('shoes')
     const [description, setDescription] = useState('')
     const [image, setImage] = useState('')
-    const [login, userStatus] = useAuth()
-
+    const { isUserLoggedIn, userStatus } = useContext(AuthContext)
     const { id } = useParams()
     const history = useHistory()
 
@@ -71,7 +70,7 @@ const EditProduct = () => {
 
     return (
         <>
-            {login && userStatus === 'admin' ? (
+            {isUserLoggedIn && userStatus === 'admin' ? (
                 <>
                     <AdminNavigation />
                     <Container>

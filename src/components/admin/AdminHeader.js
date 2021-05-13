@@ -8,7 +8,7 @@ import User from '../../images/icons/user.svg'
 const AdminHeader = () => {
     
     return (
-        <div>
+        <StyledHeader>
             <SearchBar />
             <IconWrapper>
             <span>
@@ -20,11 +20,15 @@ const AdminHeader = () => {
                         <Icon src={Plus} alt="add-icon" />
                 </StyledLink>
             </IconWrapper>
-        </div>
+        </StyledHeader>
     )
 }
 
 export default AdminHeader
+
+const StyledHeader = styled.header`
+    margin: 2rem;
+`
 
 const StyledLink = styled(Link)`
     text-decoration: none;

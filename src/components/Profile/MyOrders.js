@@ -55,6 +55,7 @@ const MyOrders = () => {
 export default MyOrders
 
 const OrdersWrapper = styled.div`
+    vertical-align: top;
     display: inline-block;
     margin-left: 5rem;
     @media only screen and (max-width: 780px) {

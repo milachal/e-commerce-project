@@ -5,22 +5,21 @@ import { Link } from 'react-router-dom'
 const PersonalInfo = (props) => {
     return (
         <Container>
-                <h2>Hello, {props.name}</h2>
-                <h3>Personal information</h3>
-                <p>{props.name}</p>
-                <p>{props.email}</p>
-                    <StyledLink to={props.link}>
-                        <Text>Edit</Text>
-                    </StyledLink>
-        
-
-            </Container>
+            <h2>Hello, {props.name}</h2>
+            <h3>Personal information</h3>
+            <p>{props.name}</p>
+            <p>{props.email}</p>
+            <StyledLink to={props.link}>
+                <Text>Edit</Text>
+            </StyledLink>
+        </Container>
     )
 }
 
 export default PersonalInfo
 
 const Container = styled.div`
+    vertical-align: top;
     margin-left: 5rem;
     display: inline-block;
     @media only screen and (max-width: 780px) {

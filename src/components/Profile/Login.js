@@ -24,7 +24,7 @@ const Login = () => {
                 setIsUserLoggedIn(true)
                 setUserStatus('admin')
                 fetchCart()
-                history.push('/admin/account/me')
+                history.push('/products')
             } else if (response.status === 200 && response.data.status === 'user') {
                 setIsUserLoggedIn(true)
                 setUserStatus('user')
@@ -76,7 +76,9 @@ const Login = () => {
                 <Header>Don't have an account?</Header>
                 <Text>If you don't have an account, please proceed by clicking the following button to continue first-time registration.</Text>
                 <br/>
-                <Button type="submit"><Link href="/account/signup">Create an account</Link></Button>
+                <Link href="/account/signup">
+                    <Button type="submit">Create an account</Button>
+                </Link>
             </SignupContainer>
         </>
     )
@@ -115,7 +117,7 @@ const Input = styled.input`
     padding: 12px 20px;
     margin: 0 2rem;
     border-radius: 5px;
-    box-shadow: 0 0 5px #575555;
+    /* box-shadow: 0 0 5px #575555; */
 `
 /* 
 styled.input[type="placeholder"]

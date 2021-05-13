@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import styled from 'styled-components'
-import DeleteProductPopUp from './DeleteProductPopUp'
+import DeletePopUp from './DeletePopUp'
 import Edit from '../../images/icons/edit.svg'
 import Delete from '../../images/icons/delete.svg'
 import authAPI from '../../api/axios'
@@ -41,13 +41,15 @@ const ProductAdminInfo = ({ image, productId }) => {
 
     if (showPopUp) {
         return (
-            <div ref={wrapperRef}>
-                <DeleteProductPopUp 
-                    image={image} 
+            <PopUpWrapper ref={wrapperRef}>
+                <DeletePopUp 
+                    text={'Are you sure you want to delete this product?'}
                     closePopUp={handleClick} 
-                    deleteProduct={deleteProduct}    
-                />
-            </div>
+                    deleteFunc={deleteProduct}    
+                >
+                    <Image src={image} alt="product" /> 
+                </DeletePopUp>
+            </PopUpWrapper>
         )
     }
 
@@ -76,6 +78,7 @@ const StyledLink = styled(Link)`
         color: #fff;
     }
 `
+
 const Icon = styled.img`
     width: 1.5rem;
     cursor: pointer;
@@ -85,7 +88,21 @@ const Icon = styled.img`
         transform: scale(1.5);
     }
 `
+
+const PopUpWrapper = styled.div`
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    /* border: 1px solid #C0C0C0; */
+    background-color: #fff;
+    z-index: 9999;
+`
+
 const StyledButton = styled.button`
     background: none;
     border: 0;
+`
+
+const Image = styled.img`
+    width: 40%;
 `
