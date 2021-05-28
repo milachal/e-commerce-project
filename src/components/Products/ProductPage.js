@@ -22,7 +22,7 @@ const ProductPage = () => {
         (async () => {
             try {
                 const { data } = await axios.get(`http://localhost:3001/api/products/${id}`)
-                setLoading(!loading)
+                setLoading(false)
                 setProduct(data)
                 setPrice(data.price)
             } catch (e) {

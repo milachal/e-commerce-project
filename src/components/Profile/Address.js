@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { StyledButton } from '../ui/Button'
 
-const Address = (props) => {
+const Address = () => {
     return (
         <Container>
                 <h2>Address</h2>

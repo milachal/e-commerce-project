@@ -15,6 +15,7 @@ import AccountMenu from './AccountMenu'
 import MyOrders from './MyOrders'
 import DeleteAccount from './DeleteAccount'
 import AuthContext from '../../contexts/AuthContext'
+import ContactUs from './ContactUs'
 
 const AccountPage = () => {
 
@@ -71,6 +72,9 @@ const AccountPage = () => {
                 </Route>
                 <Route path={`${path}/orders/history`}>
                     <MyOrders />
+                </Route>
+                <Route path={`${path}/contact-us`}>
+                    <ContactUs />
                 </Route>
                 <Route path={`${path}/delete-account`}>
                     <DeleteAccount />

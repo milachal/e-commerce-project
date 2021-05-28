@@ -19,25 +19,6 @@ const DeleteAccount = () => {
         history.push('/')
     }
 
-    const handleClick = e => {
-        e.stopPropagation()
-        setShowPopUp(true)
-    }
-
-    const closePopUp = () => {
-        setShowPopUp(false)
-    }
-
-    // if (showPopUp) {
-    //     return (
-    //         <DeletePopUp 
-    //             text={'Are you sure you want to delete your account?'} 
-    //             deleteFunc={deleteAccount}
-    //             closePopUp={!showPopUp}
-    //         />
-    //     )
-    // }
-
     return (
         <Container>
             <h2>Delete account</h2>
@@ -46,10 +27,10 @@ const DeleteAccount = () => {
                     <DeletePopUp 
                         text={'Are you sure you want to delete your account?'} 
                         deleteFunc={deleteAccount}
-                        closePopUp={closePopUp}
+                        closePopUp={() => setShowPopUp(false)}
                     />
                 </PopUpWrapper>
-            ): <RedButton onClick={handleClick}>Delete</RedButton>}
+            ): <RedButton onClick={() => setShowPopUp(true)}>Delete</RedButton>}
         </Container>
     )
 }

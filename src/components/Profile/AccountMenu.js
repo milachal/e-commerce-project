@@ -34,7 +34,9 @@ const AccountMenu = () => {
                 <li>
                     <StyledLink activeClassName="any" to={`${url}/orders/history`}>My orders</StyledLink>
                 </li>
-                <li>Contact us</li>
+                <li>
+                    <StyledLink activeClassName="any" to ={`${url}/contact-us`}>Contact us</StyledLink>
+                </li>
                 <li>
                     <StyledLink activeClassName="any" to={`${url}/delete-account`}>Delete Account</StyledLink>
                 </li>
@@ -50,18 +52,24 @@ export default AccountMenu
 
 const LogoutButton = styled.div`
     display: inline-block;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
     background-color: #000;  
     color: #fff;
     padding: 10px 10px;
     border-radius: 5px;
     margin-top: 1rem; 
+    max-width: 8rem;
+    width: 80%;
+    text-align: center;
 `
 
 const Container = styled.div`
         margin: 0 1rem 1rem 1rem;
         display: inline-block;
-        font-size: 20px;  
+        font-size: 18px;  
     `
  const StyledLink = styled(NavLink)`
         text-decoration: none;
