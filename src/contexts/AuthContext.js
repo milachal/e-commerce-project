@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 
 export default React.createContext({
-    isUserLoggedIn: false,
-    isPageloading: true,
-    userStatus: '',
-    setUserStatus: () => {},
-    setIsUserLoggedIn: () => {}
-})
+  isUserLoggedIn: false,
+  isPageloading: true,
+  userStatus: '',
+  setUserStatus: () => {},
+  setIsUserLoggedIn: () => {},
+});
