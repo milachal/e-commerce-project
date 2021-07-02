@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import authAPI from '../../api/axios';
 import search from '../../images/icons/magnifying-glass.svg';
 import SearchSuggestion from '../products/searchSuggestion';
 
@@ -26,7 +26,7 @@ const SearchBar = () => {
   const getSearchKeyword = async (e) => {
     const newKeyword = e.target.value;
     setKeyword(newKeyword);
-    const { data } = await axios.get('http://localhost:3001/api/products/');
+    const { data } = await authAPI.get('/products/');
     if (newKeyword) {
       setSuggestions(data.filter((product) => product.title.toLowerCase().includes(newKeyword)));
       setShowSuggestions(true);

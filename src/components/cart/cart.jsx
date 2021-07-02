@@ -36,7 +36,7 @@ const Cart = () => {
       history.push('/account/login');
     }
     if (cart.products && cart.products.length === 0) {
-      //?
+      // ?
     } else {
       updateTotal(cart.products);
     }

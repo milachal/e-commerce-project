@@ -22,7 +22,7 @@ const EditProduct = () => {
 
   useEffect(() => {
     const getProductById = async () => {
-      const { data } = await axios.get(`http://localhost:3001/api/products/${id}`);
+      const { data } = await axios.get(`/products/${id}`);
       setTitle(data.title);
       setPrice(data.price.$numberDecimal);
       setSex(data.sex);

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
 import styled from 'styled-components';
+import authAPI from '../../api/axios';
 import ProductCard from './productCard';
 import Spinner from '../ui/spinner';
 
@@ -15,7 +15,7 @@ const Products = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const { data } = await axios.get('http://localhost:3001/api/products');
+        const { data } = await authAPI.get('/products');
 
         if (keyword) {
           setProducts(data.filter((product) => product.title.toLowerCase().includes(keyword)));

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import Slider from 'react-slick';
+import authAPI from '../../../api/axios';
 import ProductCard from '../../products/productCard';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -52,7 +52,7 @@ const Featured = () => {
 
   useEffect(() => {
     const getFeaturedProducts = async () => {
-      const { data } = await axios.get('http://localhost:3001/api/products');
+      const { data } = await authAPI.get('/products');
       setProducts(data.slice(0, 5));
       setLoading(false);
     };

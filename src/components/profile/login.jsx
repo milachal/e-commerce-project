@@ -9,7 +9,7 @@ import CartContext from '../../contexts/cartContext';
 
 const Login = () => {
   const {
-    setIsUserLoggedIn, setUserStatus, isUserLoggedIn, userStatus
+    setIsUserLoggedIn, setUserStatus, isUserLoggedIn, userStatus,
   } = useContext(AuthContext);
   const { fetchCart } = useContext(CartContext);
   const [email, setEmail] = useState('');
@@ -24,7 +24,7 @@ const Login = () => {
     if (isUserLoggedIn && userStatus === 'user') {
       history.push('/account/me');
     }
-  }, [isUserLoggedIn, userStatus]);
+  }, [isUserLoggedIn, userStatus, history]);
 
   const loginHandler = async () => {
     try {

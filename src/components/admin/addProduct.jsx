@@ -33,7 +33,7 @@ const AddProduct = () => {
     }
     const postProduct = async () => {
       try {
-        await authAPI.post('http://localhost:3001/api/add-new-product', {
+        await authAPI.post('/add-new-product', {
           title, price, sex, category, description, image,
         });
         history.push('/products');

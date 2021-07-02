@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const NotificationBadge = (props) => (
-  <Badge>{props.children}</Badge>
+const NotificationBadge = ({ children }) => (
+  <Badge>{children}</Badge>
 );
 
 export default NotificationBadge;

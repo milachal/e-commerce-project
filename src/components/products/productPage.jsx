@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import authAPI from '../../api/axios';
@@ -15,14 +14,14 @@ const ProductPage = () => {
   const [price, setPrice] = useState('');
   const [loading, setLoading] = useState(true);
   const { fetchCart } = useContext(CartContext);
-  const { isUserLoggedIn, userStatus } = useContext(AuthContext);
+  const { isUserLoggedIn } = useContext(AuthContext);
   const history = useHistory();
   const { id } = useParams();
 
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get(`http://localhost:3001/api/products/${id}`);
+        const { data } = await authAPI.get(`/products/${id}`);
         setLoading(false);
         setProduct(data);
         setPrice(data.price);

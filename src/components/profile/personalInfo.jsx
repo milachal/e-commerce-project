@@ -2,15 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const PersonalInfo = (props) => (
+const PersonalInfo = ({
+  name, email, link,
+}) => (
   <Container>
     <h2>
-      Hello, {props.name}
+      Hello,
+      {' '}
+      {name}
     </h2>
     <h3>Personal information</h3>
-    <p>{props.name}</p>
-    <p>{props.email}</p>
-    <StyledLink to={props.link}>
+    <p>{name}</p>
+    <p>{email}</p>
+    <StyledLink to={link}>
       <Text>Edit</Text>
     </StyledLink>
   </Container>

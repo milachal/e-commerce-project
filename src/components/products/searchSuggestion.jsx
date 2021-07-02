@@ -2,20 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-const SearchSuggestion = (props) => (
-  <StyledLink to={`/product/${props.id}`}>
+const SearchSuggestion = ({
+  id, src, alt, title, price,
+}) => (
+  <StyledLink to={`/product/${id}`}>
     <Container>
       <div>
         <Image
-          src={props.src}
-          alt={props.alt}
+          src={src}
+          alt={alt}
         />
       </div>
       <TitleContainer>
-        <h5>{props.title}</h5>
+        <h5>{title}</h5>
       </TitleContainer>
       <div>
-        <h5>{props.price}</h5>
+        <h5>{price}</h5>
       </div>
     </Container>
   </StyledLink>

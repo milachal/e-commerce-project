@@ -33,7 +33,7 @@ const ProductAdminInfo = ({ image, productId }) => {
 
   const deleteProduct = async (e) => {
     e.preventDefault();
-    await authAPI.delete(`http://localhost:3001/api/products/${productId}`);
+    await authAPI.delete(`/products/${productId}`);
     handleClick(e);
     history.push('/products');
     history.go(0);

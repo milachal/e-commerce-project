@@ -17,8 +17,8 @@ const SignUp = () => {
 
   const history = useHistory();
 
-  const onSubmitHandler = async (e) => {
-    e.preventDefault();
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
     if (password !== repeatPassword) {
       return setError('Password doesn\'t match.');
     }
@@ -31,14 +31,14 @@ const SignUp = () => {
       if (response.data.status === 'user') {
         setIsUserLoggedIn(true);
       }
-    } catch (error) {
-      if (error.response && error.response.status === 500) {
+    } catch (e) {
+      if (e.response && e.response.status === 500) {
         setError('Something went wrong. Please try again.');
       }
-      if (error.response && error.response.status === 400) {
+      if (e.response && e.response.status === 400) {
         setError('Email exists.');
       }
-      return error;
+      return e;
     }
   };
 

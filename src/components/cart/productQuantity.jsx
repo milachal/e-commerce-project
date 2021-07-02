@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import authAPI from '../../api/axios';
 import CartContext from '../../contexts/cartContext';
 
-const ProductQuantity = (props) => {
-  const [productQuantity, setQuantity] = useState(props.quantity);
+const ProductQuantity = ({ quantity, id, updateTotal }) => {
+  const [productQuantity, setQuantity] = useState(quantity);
   const { cart, setCart } = useContext(CartContext);
 
   const addQuantity = async () => {
@@ -13,12 +13,12 @@ const ProductQuantity = (props) => {
       return;
     }
     setQuantity(newQuantity);
-    const { data } = await authAPI.post('/cart', { productId: props.id, quantity: newQuantity });
+    const { data } = await authAPI.post('/cart', { productId: id, quantity: newQuantity });
     setCart({
       ...cart,
       count: cart.count + 1,
     });
-    props.updateTotal(data);
+    updateTotal(data);
   };
 
   const minusQuantity = async () => {
@@ -27,12 +27,12 @@ const ProductQuantity = (props) => {
       return;
     }
     setQuantity(newQuantity);
-    const { data } = await authAPI.post('/cart', { productId: props.id, quantity: newQuantity });
+    const { data } = await authAPI.post('/cart', { productId: id, quantity: newQuantity });
     setCart({
       ...cart,
       count: cart.count - 1,
     });
-    props.updateTotal(data);
+    updateTotal(data);
   };
   return (
     <>

@@ -4,14 +4,16 @@ import styled from 'styled-components';
 import authAPI from '../../api/axios';
 import { StyledButton } from '../ui/button';
 
-const EditPersonalInfo = (props) => {
+const EditPersonalInfo = ({
+  name, email, url, nameValue, onChangeName, emailValue, onChangeEmail,
+}) => {
   const history = useHistory();
   const saveEdits = async () => {
     await authAPI.patch('account/edit', {
-      name: props.name,
-      email: props.email,
+      name,
+      email,
     });
-    history.push(props.url);
+    history.push(url);
   };
 
   return (
@@ -22,8 +24,8 @@ const EditPersonalInfo = (props) => {
           type="text"
           name="name"
           placeholder="Your name"
-          value={props.nameValue}
-          onChange={props.onChangeName}
+          value={nameValue}
+          onChange={onChangeName}
         />
       </InputContainer>
       <InputContainer>
@@ -31,8 +33,8 @@ const EditPersonalInfo = (props) => {
           type="email"
           name="email"
           placeholder="email"
-          value={props.emailValue}
-          onChange={props.onChangeEmail}
+          value={emailValue}
+          onChange={onChangeEmail}
         />
       </InputContainer>
       <Button type="submit" onClick={saveEdits}>Save</Button>
