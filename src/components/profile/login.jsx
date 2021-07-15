@@ -50,7 +50,7 @@ const Login = () => {
       <Navigation />
       <LoginContainer>
 
-        <Header>Log in</Header>
+        <Header data-cy="login-page-title">Log in</Header>
         {error ? <Error>{error}</Error> : null}
         <InputContainer>
           <Input
@@ -59,6 +59,7 @@ const Login = () => {
             placeholder="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            data-cy="email-input"
           />
         </InputContainer>
         <InputContainer>
@@ -68,11 +69,13 @@ const Login = () => {
             placeholder="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            data-cy="password-input"
           />
         </InputContainer>
         <Button
           type="submit"
           onClick={loginHandler}
+          dataAttr="login-submit-button"
         >
           Log in
         </Button>

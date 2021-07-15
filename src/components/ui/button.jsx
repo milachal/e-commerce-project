@@ -1,8 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = ({ onClick, type, children }) => (
-  <StyledButton type={type} onClick={onClick}>{children}</StyledButton>
+const Button = ({
+  onClick, type, children, dataAttr,
+}) => (
+  <StyledButton
+    type={type}
+    onClick={onClick}
+    data-cy={dataAttr}
+  >
+    {children}
+  </StyledButton>
 );
 
 export default Button;

@@ -86,6 +86,7 @@ const SignUp = () => {
             />
             By creating an account you agree to our
             {' '}
+            {/* eslint-disable */}
             <a href="#">Terms&#38;Privacy</a>
           </TextContainer>
           <Button type="submit" onClick={onSubmitHandler}>Submit</Button>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import authAPI from '../api/axios';
-
+/* eslint-disable */
 export const useAuth = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
   const [userStatus, setUserStatus] = useState('');

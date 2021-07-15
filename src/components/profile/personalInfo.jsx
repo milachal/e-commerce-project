@@ -13,7 +13,7 @@ const PersonalInfo = ({
     </h2>
     <h3>Personal information</h3>
     <p>{name}</p>
-    <p>{email}</p>
+    <p data-cy="account-page-email">{email}</p>
     <StyledLink to={link}>
       <Text>Edit</Text>
     </StyledLink>

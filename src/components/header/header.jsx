@@ -13,8 +13,10 @@ const Header = () => {
   return (
     <StyledHeader>
       <SearchBar />
-      <AccountContainer>
-        <Link to="/account/me">
+      <AccountContainer data-cy="profile-cart-icon">
+        <Link
+          to="/account/me"
+        >
           <Icon src={User} alt="user-icon" />
         </Link>
       </AccountContainer>

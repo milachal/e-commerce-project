@@ -40,7 +40,12 @@ const AccountMenu = () => {
           <StyledLink activeClassName="any" to={`${url}/delete-account`}>Delete Account</StyledLink>
         </li>
         <li>
-          <LogoutButton onClick={logoutUser}>Log out</LogoutButton>
+          <LogoutButton
+            onClick={logoutUser}
+            data-cy="logout-button"
+          >
+            Log out
+          </LogoutButton>
         </li>
       </LinksContainer>
     </Container>
