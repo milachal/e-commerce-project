@@ -20,5 +20,5 @@ Check the package.json for other scripts.
 
 ## Useful links
 
-Deployed app: https://chal-e-commerce-fe.herokuapp.com/
-The deployed API: https://chal-api.herokuapp.com/api
+heroku app: https://chal-e-commerce-fe.herokuapp.com/
+heroku API: https://chal-api.herokuapp.com/api
