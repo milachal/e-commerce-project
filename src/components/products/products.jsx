@@ -16,7 +16,7 @@ const Products = () => {
     const fetchProducts = async () => {
       try {
         const { data } = await authAPI.get('/products');
-
+        console.log(data, "producdts")
         if (keyword) {
           setProducts(data.filter((product) => product.title.toLowerCase().includes(keyword)));
         } else {
